@@ -32,12 +32,11 @@ export default function RegisterPage() {
 
   const tracks = useMemo(
     () => [
-      "AI & Machine Learning",
-      "Web Development",
-      "Mobile Apps",
-      "Cybersecurity",
-      "IoT & Hardware",
-      "Open Innovation",
+      "AI for Social Impact",
+      "AI for Sustainability & Environment",
+      "AI for Food & Agriculture",
+      "AI for Post-Harvest Management",
+      "Open AI Innovation",
     ],
     []
   );
