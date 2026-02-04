@@ -4,6 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
+type Track = {
+  title: string;
+  desc: string;
+  badge: string;
+  border: string;
+  glow: string;
+  icon: string;
+};
+
 export default function HomePage() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -14,6 +23,52 @@ export default function HomePage() {
       { id: "timeline", label: "Timeline" },
       { id: "prizes", label: "Prizes" },
       { id: "register", label: "Register" },
+    ],
+    []
+  );
+
+  const tracks: Track[] = useMemo(
+    () => [
+      {
+        title: "AI for Social Impact",
+        desc: "Create AI-driven solutions to address social challenges and improve community wellbeing.",
+        badge: "Social",
+        border: "border-red-500/30",
+        glow: "shadow-red-500/20",
+        icon: "fa-hand-holding-heart",
+      },
+      {
+        title: "AI for Sustainability & Environment",
+        desc: "Design AI technologies for climate action, resource optimization, and eco-friendly solutions.",
+        badge: "Environment",
+        border: "border-purple-500/30",
+        glow: "shadow-purple-500/20",
+        icon: "fa-leaf",
+      },
+      {
+        title: "AI for Food & Agriculture",
+        desc: "Develop AI applications to optimize crop yield, improve food security, maximize harvests, and reduce losses.",
+        badge: "Agriculture",
+        border: "border-red-500/30",
+        glow: "shadow-red-500/20",
+        icon: "fa-seedling",
+      },
+      {
+        title: "AI for Post-Harvest Management",
+        desc: "Predict storage needs and reduce spoilage with AI monitoring systems.",
+        badge: "Post-Harvest",
+        border: "border-purple-500/30",
+        glow: "shadow-purple-500/20",
+        icon: "fa-warehouse",
+      },
+      {
+        title: "Open AI Innovation",
+        desc: "Unleash creativity by developing original AI-powered ideas for any real-world problem.",
+        badge: "Open Innovation",
+        border: "border-red-500/30",
+        glow: "shadow-red-500/20",
+        icon: "fa-lightbulb",
+      },
     ],
     []
   );
@@ -216,7 +271,11 @@ export default function HomePage() {
               ))}
             </div>
 
-            <button onClick={() => setMobileOpen((s) => !s)} className="md:hidden text-red-400" aria-label="Toggle menu">
+            <button
+              onClick={() => setMobileOpen((s) => !s)}
+              className="md:hidden text-red-400"
+              aria-label="Toggle menu"
+            >
               <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-2xl`} />
             </button>
           </div>
@@ -357,7 +416,7 @@ export default function HomePage() {
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 glow-box">
                   <h3 className="text-xl font-bold orbitron text-purple-400 mb-2">Our solution</h3>
                   <p className="text-gray-300">
-                    A structured, multi-phase hackathon: register → submit a proposal → get shortlisted → present → build
+                    A structured, multi-phase hackathon: register • submit a proposal • get shortlisted • present • build
                     and demo a working solution.
                   </p>
                 </div>
@@ -372,14 +431,14 @@ export default function HomePage() {
                   <div className="text-3xl font-bold text-purple-400 mb-1 orbitron">2</div>
                   <div className="text-gray-200 text-sm">Phases</div>
                 </div>
-                <div className="text-center bg-orange-500/20 backdrop-blur-md p-4 rounded-xl border border-orange-500/30 glow-box">
-                  <div className="text-3xl font-bold text-orange-400 mb-1 orbitron">6</div>
-                  <div className="text-gray-200 text-sm">Tracks</div>
+                <div className="text-center bg-red-500/10 backdrop-blur-md p-4 rounded-xl border border-red-500/30 glow-box">
+                  <div className="text-3xl font-bold text-red-300 mb-1 orbitron">5</div>
+                  <div className="text-gray-200 text-sm">Competitive Tracks</div>
                 </div>
               </div>
             </div>
 
-            {/* ✅ REAL HACKATHON PHOTO CARD (put image in /public/hackathon.png) */}
+            {/* REAL HACKATHON PHOTO CARD (put image in /public/hackathon.png) */}
             <div className="relative group scroll-reveal">
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 to-purple-500/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-300" />
 
@@ -397,8 +456,6 @@ export default function HomePage() {
 
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="text-2xl font-bold text-red-400 mb-3 orbitron">Build with Purpose</h3>
-
-                  {/* ✅ Replaces arrow text with a clean “pill steps” row */}
                   <div className="flex flex-wrap items-center gap-2 text-sm">
                     <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
                       Problem
@@ -423,6 +480,54 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Tracks (NEW) */}
+      <section id="tracks" className="py-24 px-4 hero-gradient relative flame-bg">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14 scroll-reveal">
+            <span className="text-purple-400 font-semibold text-sm uppercase tracking-widest orbitron">
+              Choose Your Battlefield
+            </span>
+            <h2 className="text-5xl font-bold mt-4 mb-4 orbitron">
+              Competetive <span className="text-gradient-animated">Tracks</span>
+            </h2>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+              Pick one track and build an AI solution with real-world value.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tracks.map((t) => (
+              <div
+                key={t.title}
+                className={`scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${t.border} glow-box card-3d`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/25 to-purple-500/25 border border-red-500/20 flex items-center justify-center">
+                    <i className={`fas ${t.icon} text-red-300`} />
+                  </div>
+                  <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-purple-500/20 text-gray-200">
+                    {t.badge}
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold mt-4 orbitron text-red-200">{t.title}</h3>
+                <p className="text-gray-300 mt-3 leading-relaxed">{t.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center scroll-reveal">
+            <button
+              onClick={() => scrollToId("register")}
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/15 transition"
+            >
+              <i className="fas fa-arrow-down text-purple-300" />
+              <span className="font-semibold">Register for a Track</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Timeline */}
       <section id="timeline" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-4xl mx-auto">
@@ -433,8 +538,6 @@ export default function HomePage() {
             <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
               Event <span className="text-gradient-animated">Timeline</span>
             </h2>
-
-            {/* ✅ Replace arrow in subtitle too */}
             <p className="text-gray-300 text-xl">
               From <span className="text-red-400 font-semibold">launch</span> •{" "}
               <span className="text-purple-400 font-semibold">proposal</span> •{" "}
@@ -470,82 +573,91 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Register */}
-      <section id="register" className="py-24 px-4 hero-gradient relative flame-bg">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16 scroll-reveal">
+      {/* Register (SHORTER HEIGHT: distribute in width) */}
+      <section id="register" className="py-20 px-4 hero-gradient relative flame-bg">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 scroll-reveal">
             <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Join the Battle</span>
-            <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
+            <h2 className="text-5xl font-bold mt-4 mb-4 orbitron">
               Register Your <span className="text-gradient-animated">Team</span>
             </h2>
-            <p className="text-gray-300 text-xl">Secure your spot in the inferno</p>
+            <p className="text-gray-300 text-lg">Secure your spot in the inferno</p>
           </div>
 
-          <div className="bg-gradient-to-br from-red-500/10 to-purple-500/10 p-10 rounded-3xl border-2 border-red-500/30 neon-border scroll-reveal">
-            <div className="text-center mb-8">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl floating hexagon pulse-glow">
-                <i className="fas fa-fire" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 orbitron text-red-400">Team Registration</h3>
-              <p className="text-gray-300 text-lg">Teams of 2-4 members | Open to all school students</p>
-            </div>
+          <div className="bg-gradient-to-br from-red-500/10 to-purple-500/10 p-8 md:p-10 rounded-3xl border-2 border-red-500/30 neon-border scroll-reveal">
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              {/* Left: header */}
+              <div className="text-center lg:text-left">
+                <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto lg:mx-0 mb-5 text-3xl floating hexagon pulse-glow">
+                  <i className="fas fa-fire" />
+                </div>
+                <h3 className="text-3xl font-bold mb-2 orbitron text-red-400">Team Registration</h3>
+                <p className="text-gray-300">Teams of 2–4 members • Open to all school students</p>
 
-            <div className="space-y-6 mb-8">
-              <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-red-500/20">
-                <h4 className="text-lg font-bold text-red-400 mb-3 orbitron">What You Need:</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li>
-                    <i className="fas fa-check text-red-400 mr-3" />
-                    Team of 2-4 students from the same school
+                <div className="mt-5 flex flex-wrap gap-2 justify-center lg:justify-start text-xs">
+                  <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
+                    FREE
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-gray-100">
+                    Limited Spots
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-gray-900/50 border border-red-500/20 text-gray-200">
+                    Deadline: Feb 28
+                  </span>
+                </div>
+              </div>
+
+              {/* Middle: requirements */}
+              <div className="bg-gray-800/45 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20">
+                <h4 className="text-lg font-bold text-red-400 mb-3 orbitron">Requirements</h4>
+                <ul className="grid sm:grid-cols-2 gap-2 text-gray-300 text-sm">
+                  <li className="flex items-start gap-2">
+                    <i className="fas fa-check text-red-400 mt-1" />
+                    <span>2–4 students (same school)</span>
                   </li>
-                  <li>
-                    <i className="fas fa-check text-red-400 mr-3" />
-                    Laptop for each team member
+                  <li className="flex items-start gap-2">
+                    <i className="fas fa-check text-red-400 mt-1" />
+                    <span>Laptop(s) for the team</span>
                   </li>
-                  <li>
-                    <i className="fas fa-check text-red-400 mr-3" />
-                    Basic coding knowledge in any language
+                  <li className="flex items-start gap-2">
+                    <i className="fas fa-check text-red-400 mt-1" />
+                    <span>Basic coding knowledge</span>
                   </li>
-                  <li>
-                    <i className="fas fa-check text-red-400 mr-3" />
-                    Passion for innovation and problem-solving
-                  </li>
-                  <li>
-                    <i className="fas fa-check text-red-400 mr-3" />
-                    School ID for verification
+                  <li className="flex items-start gap-2">
+                    <i className="fas fa-check text-red-400 mt-1" />
+                    <span>School ID verification</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-r from-red-500/20 to-purple-500/20 p-6 rounded-xl border border-purple-500/30">
-                <div className="flex items-start gap-4">
-                  <i className="fas fa-info-circle text-purple-400 text-2xl mt-1" />
+              {/* Right: CTA */}
+              <div className="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/25">
+                <div className="flex items-start gap-3 mb-4">
+                  <i className="fas fa-info-circle text-purple-400 text-xl mt-1" />
                   <div>
-                    <h4 className="text-lg font-bold text-purple-400 mb-2">Registration Info</h4>
-                    <p className="text-gray-300 text-sm">
-                      Registration closes <span className="text-white font-semibold">Feb 28</span>. Limited spots — first
-                      come, first served!
-                    </p>
+                    <h4 className="text-lg font-bold text-purple-400 mb-1">How it works</h4>
+                    <p className="text-gray-300 text-sm">Register your team, choose a track, and submit your proposal.</p>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div className="text-center">
-              <Link
-                href="/register"
-                className="inline-block btn-inferno px-12 py-5 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-105 mb-4"
-              >
-                <i className="fas fa-rocket mr-2" />
-                Register Your Team Now
-              </Link>
-              <p className="text-gray-400 text-sm">Registration is completely FREE</p>
+                <Link
+                  href="/register"
+                  className="block text-center btn-inferno px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-[1.02]"
+                >
+                  <i className="fas fa-rocket mr-2" />
+                  Register Now
+                </Link>
+
+                <p className="text-gray-400 text-xs text-center mt-3">
+                  Make sure you have your team leader contact details ready.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ✅ Simple Footer (red + purple accents, no color change) */}
+      {/* Simple Footer */}
       <footer className="bg-gray-950/80 border-t border-red-500/20">
         <div className="max-w-6xl mx-auto px-6 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -564,8 +676,8 @@ export default function HomePage() {
                 About
               </button>
               <span className="text-purple-500/60">•</span>
-              <button onClick={() => scrollToId("timeline")} className="text-gray-300 hover:text-purple-400 transition">
-                Timeline
+              <button onClick={() => scrollToId("tracks")} className="text-gray-300 hover:text-purple-400 transition">
+                Tracks
               </button>
               <span className="text-purple-500/60">•</span>
               <button onClick={() => scrollToId("register")} className="text-gray-300 hover:text-red-400 transition">

@@ -5,6 +5,12 @@ export const metadata: Metadata = {
   title: "InfernoX 1.0 | Inter-School Hackathon",
   description: "InfernoX 1.0 – Inter-School Hackathon Competition by Robotics Club of LNBTI",
 };
+<script
+  src="https://kit.fontawesome.com/a076d05399.js"
+  crossOrigin="anonymous"
+  defer
+></script>
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
