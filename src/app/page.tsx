@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -17,6 +18,66 @@ export default function HomePage() {
     []
   );
 
+  const timeline = useMemo(
+    () => [
+      {
+        icon: "1",
+        color: "from-red-500 to-orange-600",
+        title: "Website Launch",
+        time: "Feb 8",
+        text: "InfernoX 1.0 website goes live and the event officially opens.",
+        border: "border-red-500/30",
+        titleColor: "text-red-400",
+      },
+      {
+        icon: "2",
+        color: "from-purple-500 to-pink-600",
+        title: "Registrations",
+        time: "Feb 8 – Feb 28",
+        text: "Teams register and confirm participation before the deadline.",
+        border: "border-purple-500/30",
+        titleColor: "text-purple-400",
+      },
+      {
+        icon: "3",
+        color: "from-green-500 to-teal-600",
+        title: "Proposal Submission",
+        time: "Feb 8 – Mar 10",
+        text: "Teams submit a clear problem statement and a proposed solution plan.",
+        border: "border-green-500/30",
+        titleColor: "text-green-400",
+      },
+      {
+        icon: "4",
+        color: "from-orange-500 to-red-600",
+        title: "Proposal Review & Shortlisting",
+        time: "Mar 10 – Mar 22",
+        text: "Proposals are reviewed and shortlisted for the presentations.",
+        border: "border-orange-500/30",
+        titleColor: "text-orange-400",
+      },
+      {
+        icon: "I",
+        color: "from-blue-500 to-cyan-600",
+        title: "Phase I (Final) — Proposal Presentation",
+        time: "Mar 31",
+        text: "Shortlisted teams present their proposal to the panel.",
+        border: "border-blue-500/30",
+        titleColor: "text-blue-400",
+      },
+      {
+        icon: "II",
+        color: "from-yellow-500 to-orange-600",
+        title: "Phase II (Final Day) — Project Demonstration",
+        time: "Expected: May 30 – Jun 5",
+        text: "Finalists demo a working solution and compete for awards.",
+        border: "border-yellow-500/30",
+        titleColor: "text-yellow-400",
+      },
+    ],
+    []
+  );
+
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -29,7 +90,7 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    // Loading Bar simulation
+    // Loading bar simulation
     const loadingBar = document.getElementById("loadingBar") as HTMLDivElement | null;
     if (loadingBar) {
       let progress = 0;
@@ -88,7 +149,6 @@ export default function HomePage() {
       },
       { threshold: 0.1 }
     );
-
     revealEls.forEach((el) => revealObs.observe(el));
 
     // Flame particles
@@ -112,9 +172,7 @@ export default function HomePage() {
     const timelineObs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("timeline-in");
-          }
+          if (entry.isIntersecting) entry.target.classList.add("timeline-in");
         });
       },
       { threshold: 0.1 }
@@ -130,249 +188,6 @@ export default function HomePage() {
 
   return (
     <main className="text-white">
-      {/* Global styles from your HTML */}
-      <style jsx global>{`
-        :root {
-          --primary: #ff0040;
-          --secondary: #8b00ff;
-          --dark: #0a0008;
-          --flame: #ff4500;
-        }
-
-        body {
-          font-family: "Inter", sans-serif;
-          background: var(--dark);
-          overflow-x: hidden;
-        }
-
-        .orbitron {
-          font-family: "Orbitron", sans-serif;
-        }
-
-        .hero-gradient {
-          background: linear-gradient(
-            135deg,
-            #0a0008 0%,
-            #1a0010 25%,
-            #2d0020 50%,
-            #1a0030 75%,
-            #0a0008 100%
-          );
-          position: relative;
-        }
-
-        .gradient-text {
-          background: linear-gradient(135deg, var(--primary), var(--flame), var(--secondary));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .text-gradient-animated {
-          background: linear-gradient(
-            135deg,
-            var(--primary),
-            var(--flame),
-            var(--secondary),
-            var(--primary)
-          );
-          background-size: 300% 300%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: gradient-shift 4s ease infinite;
-        }
-
-        @keyframes gradient-shift {
-          0%,
-          100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-
-        .glow-box {
-          box-shadow: 0 0 40px rgba(255, 0, 64, 0.4);
-          transition: all 0.3s ease;
-        }
-        .glow-box:hover {
-          box-shadow: 0 0 60px rgba(255, 0, 64, 0.6), 0 0 100px rgba(139, 0, 255, 0.3);
-          transform: translateY(-5px);
-        }
-
-        .floating {
-          animation: floating 6s ease-in-out infinite;
-        }
-        @keyframes floating {
-          0%,
-          100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          25% {
-            transform: translateY(-10px) rotate(2deg);
-          }
-          50% {
-            transform: translateY(-20px) rotate(0deg);
-          }
-          75% {
-            transform: translateY(-10px) rotate(-2deg);
-          }
-        }
-
-        .flame-bg {
-          background-image: radial-gradient(circle at 20% 50%, rgba(255, 0, 64, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 50%, rgba(139, 0, 255, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 50% 80%, rgba(255, 69, 0, 0.1) 0%, transparent 50%);
-        }
-
-        .neon-border {
-          border: 2px solid var(--primary);
-          box-shadow: 0 0 20px rgba(255, 0, 64, 0.5), inset 0 0 20px rgba(255, 0, 64, 0.1);
-        }
-
-        .neon-border-purple {
-          border: 2px solid var(--secondary);
-          box-shadow: 0 0 20px rgba(139, 0, 255, 0.5), inset 0 0 20px rgba(139, 0, 255, 0.1);
-        }
-
-        .flame-particle {
-          position: absolute;
-          width: 4px;
-          height: 4px;
-          background: linear-gradient(to top, var(--flame), var(--primary));
-          border-radius: 50%;
-          pointer-events: none;
-          animation: flame-rise 3s ease-in infinite;
-          box-shadow: 0 0 15px rgba(255, 69, 0, 0.8);
-        }
-
-        @keyframes flame-rise {
-          0% {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-100vh) scale(0);
-            opacity: 0;
-          }
-        }
-
-        .pulse-glow {
-          animation: pulse-glow 2s infinite;
-        }
-        @keyframes pulse-glow {
-          0%,
-          100% {
-            box-shadow: 0 0 20px rgba(255, 0, 64, 0.5), 0 0 40px rgba(139, 0, 255, 0.3);
-          }
-          50% {
-            box-shadow: 0 0 40px rgba(255, 0, 64, 0.8), 0 0 80px rgba(139, 0, 255, 0.5);
-          }
-        }
-
-        .card-3d {
-          transform-style: preserve-3d;
-          transition: transform 0.5s ease, box-shadow 0.5s ease;
-          perspective: 1000px;
-        }
-        .card-3d:hover {
-          transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
-        }
-
-        .scan-line {
-          position: absolute;
-          width: 100%;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, var(--primary), transparent);
-          opacity: 0.3;
-          animation: scan 4s linear infinite;
-          pointer-events: none;
-        }
-        @keyframes scan {
-          0% {
-            top: 0%;
-          }
-          100% {
-            top: 100%;
-          }
-        }
-
-        .scroll-reveal {
-          opacity: 0;
-          transform: translateY(50px);
-          transition: all 0.8s ease;
-        }
-        .scroll-reveal.revealed {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .btn-inferno {
-          position: relative;
-          overflow: hidden;
-          background: linear-gradient(135deg, var(--primary), var(--flame));
-        }
-        .btn-inferno::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-          transition: left 0.5s;
-        }
-        .btn-inferno:hover::before {
-          left: 100%;
-        }
-
-        .hexagon {
-          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
-
-        .fire-text {
-          text-shadow: 0 0 20px rgba(255, 0, 64, 0.8), 0 0 40px rgba(255, 69, 0, 0.6),
-            0 0 60px rgba(139, 0, 255, 0.4);
-          animation: fire-flicker 2s infinite alternate;
-        }
-
-        @keyframes fire-flicker {
-          0%,
-          100% {
-            text-shadow: 0 0 20px rgba(255, 0, 64, 0.8), 0 0 40px rgba(255, 69, 0, 0.6),
-              0 0 60px rgba(139, 0, 255, 0.4);
-          }
-          50% {
-            text-shadow: 0 0 30px rgba(255, 0, 64, 1), 0 0 60px rgba(255, 69, 0, 0.8),
-              0 0 90px rgba(139, 0, 255, 0.6);
-          }
-        }
-
-        .loading-bar {
-          width: 0%;
-          height: 4px;
-          background: linear-gradient(90deg, var(--primary), var(--flame), var(--secondary));
-          position: fixed;
-          top: 0;
-          left: 0;
-          z-index: 10000;
-          transition: width 0.3s ease;
-        }
-
-        /* Timeline items animation (React version) */
-        .timeline-item {
-          opacity: 0;
-          transform: translateX(-30px);
-          transition: opacity 0.45s ease, transform 0.45s ease;
-        }
-        .timeline-item.timeline-in {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      `}</style>
-
       {/* Loading Bar */}
       <div className="loading-bar" id="loadingBar" />
 
@@ -383,26 +198,25 @@ export default function HomePage() {
       <nav className="fixed w-full z-50 bg-gray-900/80 backdrop-blur-lg border-b border-red-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-purple-600 rounded-lg flex items-center justify-center text-2xl font-black hexagon pulse-glow">
-                <i className="fas fa-fire" />
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="flex items-center gap-3"
+              aria-label="Go to top"
+            >
+              <div className="relative h-10 w-40 sm:h-11 sm:w-48">
+                <Image src="/infernox-logo.png" alt="InfernoX 1.0" fill priority className="object-contain" />
               </div>
-              <span className="text-2xl font-bold orbitron gradient-text">InfernoX 1.0</span>
-            </div>
+            </button>
 
             <div className="hidden md:flex space-x-8">
               {navLinks.map((l) => (
-                <button
-                  key={l.id}
-                  onClick={() => scrollToId(l.id)}
-                  className="hover:text-red-400 transition"
-                >
+                <button key={l.id} onClick={() => scrollToId(l.id)} className="hover:text-red-400 transition">
                   {l.label}
                 </button>
               ))}
             </div>
 
-            <button onClick={() => setMobileOpen((s) => !s)} className="md:hidden text-red-400">
+            <button onClick={() => setMobileOpen((s) => !s)} className="md:hidden text-red-400" aria-label="Toggle menu">
               <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-2xl`} />
             </button>
           </div>
@@ -471,14 +285,14 @@ export default function HomePage() {
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-lg">
             <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-red-500/30 glow-box floating">
               <i className="fas fa-calendar-alt text-red-400" />
-              <span>[Event Date]</span>
+              <span>Finals: May 30 – Jun 5</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-500/30 glow-box floating"
               style={{ animationDelay: "0.5s" }}
             >
               <i className="fas fa-clock text-purple-400" />
-              <span>24 Hours</span>
+              <span>Multi-Phase Event</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/30 glow-box floating"
@@ -528,15 +342,26 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="scroll-reveal">
               <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                <span className="text-red-400 font-bold">InfernoX 1.0</span> is an intense,
-                high-energy inter-school hackathon where young minds build innovative solutions.
+                <span className="text-red-400 font-bold">InfernoX 1.0</span> is an inter-school hackathon built around
+                real problem-solving — not just random projects.
               </p>
-              <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                This 24-hour coding marathon challenges students to think creatively and present boldly.
-              </p>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                All skill levels welcome. Bring your ideas, your team, and your determination!
-              </p>
+
+              <div className="grid gap-4 mt-8">
+                <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20 glow-box">
+                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we’re solving</h3>
+                  <p className="text-gray-300">
+                    Students often build projects without a real problem focus, so ideas don’t translate into impact.
+                  </p>
+                </div>
+
+                <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 glow-box">
+                  <h3 className="text-xl font-bold orbitron text-purple-400 mb-2">Our solution</h3>
+                  <p className="text-gray-300">
+                    A structured, multi-phase hackathon: register → submit a proposal → get shortlisted → present → build
+                    and demo a working solution.
+                  </p>
+                </div>
+              </div>
 
               <div className="mt-8 grid grid-cols-3 gap-4">
                 <div className="text-center bg-red-500/20 backdrop-blur-md p-4 rounded-xl border border-red-500/30 glow-box">
@@ -544,129 +369,54 @@ export default function HomePage() {
                   <div className="text-gray-200 text-sm">Teams</div>
                 </div>
                 <div className="text-center bg-purple-500/20 backdrop-blur-md p-4 rounded-xl border border-purple-500/30 glow-box">
-                  <div className="text-3xl font-bold text-purple-400 mb-1 orbitron">24</div>
-                  <div className="text-gray-200 text-sm">Hours</div>
+                  <div className="text-3xl font-bold text-purple-400 mb-1 orbitron">2</div>
+                  <div className="text-gray-200 text-sm">Phases</div>
                 </div>
                 <div className="text-center bg-orange-500/20 backdrop-blur-md p-4 rounded-xl border border-orange-500/30 glow-box">
-                  <div className="text-3xl font-bold text-orange-400 mb-1 orbitron">5</div>
+                  <div className="text-3xl font-bold text-orange-400 mb-1 orbitron">6</div>
                   <div className="text-gray-200 text-sm">Tracks</div>
                 </div>
               </div>
             </div>
 
+            {/* ✅ REAL HACKATHON PHOTO CARD (put image in /public/hackathon.png) */}
             <div className="relative group scroll-reveal">
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 to-purple-500/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-300" />
+
               <div className="relative rounded-3xl overflow-hidden border-2 border-red-500/30 neon-border card-3d">
-                <div className="w-full h-96 bg-gradient-to-br from-red-900/50 via-purple-900/50 to-orange-900/50 flex items-center justify-center">
-                  <i className="fas fa-fire text-9xl text-red-400 floating" />
+                <div className="relative w-full h-96">
+                  <Image
+                    src="/hackathon.png"
+                    alt="Students collaborating during a hackathon"
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent" />
+
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-2xl font-bold text-red-400 mb-2 orbitron">Code in the Heat</h3>
-                  <p className="text-gray-200">Experience the ultimate coding challenge</p>
+                  <h3 className="text-2xl font-bold text-red-400 mb-3 orbitron">Build with Purpose</h3>
+
+                  {/* ✅ Replaces arrow text with a clean “pill steps” row */}
+                  <div className="flex flex-wrap items-center gap-2 text-sm">
+                    <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
+                      Problem
+                    </span>
+                    <span className="text-purple-300/90">•</span>
+                    <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-gray-100">
+                      Proposal
+                    </span>
+                    <span className="text-purple-300/90">•</span>
+                    <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
+                      Demo
+                    </span>
+                  </div>
+
+                  <p className="text-gray-200/80 text-sm mt-3">
+                    Collaborate, iterate, and ship something real—together.
+                  </p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tracks (same structure as your HTML; kept) */}
-      <section id="tracks" className="py-24 px-4 hero-gradient relative flame-bg">
-        <div className="scan-line" />
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 scroll-reveal">
-            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
-              Choose Your Battle
-            </span>
-            <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
-              Competition <span className="text-gradient-animated">Tracks</span>
-            </h2>
-            <p className="text-gray-300 text-xl">Pick your domain and dominate</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* AI */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-red-500/30 neon-border text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-brain" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-red-400">AI & Machine Learning</h3>
-              <p className="text-gray-300 mb-4">Build intelligent solutions using AI technologies</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs">Python</span>
-                <span className="bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-xs">TensorFlow</span>
-                <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs">ML</span>
-              </div>
-            </div>
-
-            {/* Web */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-purple-500/30 neon-border-purple text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-globe" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-purple-400">Web Development</h3>
-              <p className="text-gray-300 mb-4">Create stunning, functional web apps</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs">React</span>
-                <span className="bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-xs">Node.js</span>
-                <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-xs">Full-Stack</span>
-              </div>
-            </div>
-
-            {/* Mobile */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-orange-500/30 text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-mobile-alt" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-orange-400">Mobile Apps</h3>
-              <p className="text-gray-300 mb-4">Develop innovative mobile solutions</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-xs">Flutter</span>
-                <span className="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-xs">React Native</span>
-                <span className="bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-xs">iOS/Android</span>
-              </div>
-            </div>
-
-            {/* Cyber */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-green-500/30 text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-shield-alt" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-green-400">Cybersecurity</h3>
-              <p className="text-gray-300 mb-4">Protect, defend, and secure systems</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-xs">Encryption</span>
-                <span className="bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full text-xs">Pentesting</span>
-                <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-xs">Security</span>
-              </div>
-            </div>
-
-            {/* IoT */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-blue-500/30 text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-database" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-blue-400">IoT & Hardware</h3>
-              <p className="text-gray-300 mb-4">Merge code with physical devices</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs">Arduino</span>
-                <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-xs">Raspberry Pi</span>
-                <span className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs">Sensors</span>
-              </div>
-            </div>
-
-            {/* Open Innovation */}
-            <div className="glow-box bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border border-yellow-500/30 text-center card-3d scroll-reveal">
-              <div className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl floating hexagon pulse-glow">
-                <i className="fas fa-lightbulb" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 orbitron text-yellow-400">Open Innovation</h3>
-              <p className="text-gray-300 mb-4">Build anything your mind imagines</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                <span className="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-xs">Any Tech</span>
-                <span className="bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-xs">Your Choice</span>
-                <span className="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-xs">Be Creative</span>
               </div>
             </div>
           </div>
@@ -678,41 +428,40 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 scroll-reveal">
             <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
-              Event Schedule
+              Official Schedule
             </span>
             <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
-              Hackathon <span className="text-gradient-animated">Timeline</span>
+              Event <span className="text-gradient-animated">Timeline</span>
             </h2>
-            <p className="text-gray-300 text-xl">24 hours of intense coding</p>
+
+            {/* ✅ Replace arrow in subtitle too */}
+            <p className="text-gray-300 text-xl">
+              From <span className="text-red-400 font-semibold">launch</span> •{" "}
+              <span className="text-purple-400 font-semibold">proposal</span> •{" "}
+              <span className="text-red-300 font-semibold">finals</span>
+            </p>
           </div>
 
           <div className="relative">
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-red-500 via-purple-500 to-orange-500 rounded-full" />
 
             <div className="space-y-12">
-              {[
-                { icon: "DAY 1", color: "from-red-500 to-orange-600", title: "Opening Ceremony", time: "9:00 AM - 10:00 AM", text: "Registration, team formation, and kickoff", border: "border-red-500/30", titleColor: "text-red-400" },
-                { iconFa: "fa-code", color: "from-purple-500 to-pink-600", title: "Hacking Begins!", time: "10:00 AM - Teams start building", text: "24 hours of non-stop coding starts now", border: "border-purple-500/30", titleColor: "text-purple-400" },
-                { iconFa: "fa-users", color: "from-green-500 to-teal-600", title: "Workshops & Mentorship", time: "Throughout the event", text: "Industry experts available for guidance", border: "border-green-500/30", titleColor: "text-green-400" },
-                { iconFa: "fa-moon", color: "from-orange-500 to-red-600", title: "Midnight Fuel", time: "12:00 AM - Keep the fire burning!", text: "Snacks, energy drinks, and team check-ins", border: "border-orange-500/30", titleColor: "text-orange-400" },
-                { icon: "DAY 2", color: "from-blue-500 to-cyan-600", title: "Final Push", time: "8:00 AM - 10:00 AM", text: "Last hours to polish your project", border: "border-blue-500/30", titleColor: "text-blue-400" },
-                { iconFa: "fa-upload", color: "from-yellow-500 to-orange-600", title: "Project Submissions", time: "10:00 AM - Deadline!", text: "Submit your final projects and presentations", border: "border-yellow-500/30", titleColor: "text-yellow-400" },
-                { iconFa: "fa-gavel", color: "from-pink-500 to-purple-600", title: "Judging & Demos", time: "11:00 AM - 1:00 PM", text: "Present your solution to the judges", border: "border-pink-500/30", titleColor: "text-pink-400" },
-                { iconFa: "fa-trophy", color: "from-red-500 to-purple-600", title: "Awards & Closing", time: "2:00 PM - Celebrate the champions!", text: "Winners announced, prizes distributed", border: "border-red-500/30", titleColor: "text-red-400" },
-              ].map((t, idx) => (
+              {timeline.map((t, idx) => (
                 <div key={idx} className="flex gap-8 items-start relative timeline-item">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${t.color} rounded-2xl flex items-center justify-center text-sm font-bold orbitron flex-shrink-0 z-10 pulse-glow`}>
-                    {t.icon ? (
-                      t.icon
-                    ) : (
-                      <i className={`fas ${t.iconFa} text-xl`} />
-                    )}
+                  <div
+                    className={`w-16 h-16 bg-gradient-to-br ${t.color} rounded-2xl flex items-center justify-center text-sm font-bold orbitron flex-shrink-0 z-10 pulse-glow`}
+                  >
+                    {t.icon}
                   </div>
 
                   <div className={`flex-1 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border ${t.border} glow-box`}>
-                    <h3 className={`text-2xl font-bold mb-2 orbitron ${t.titleColor}`}>{t.title}</h3>
-                    <p className="text-gray-300 mb-2">{t.text}</p>
-                    <div className="text-sm text-gray-200/80">{t.time}</div>
+                    <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
+                      <h3 className={`text-2xl font-bold orbitron ${t.titleColor}`}>{t.title}</h3>
+                      <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-red-500/20 text-gray-200">
+                        {t.time}
+                      </span>
+                    </div>
+                    <p className="text-gray-300">{t.text}</p>
                   </div>
                 </div>
               ))}
@@ -721,80 +470,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Prizes (shortened text but same look) */}
-      <section id="prizes" className="py-24 px-4 hero-gradient relative flame-bg">
-        <div className="scan-line" />
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 scroll-reveal">
-            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">What You'll Win</span>
-            <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
-              Epic <span className="text-gradient-animated">Prizes</span>
-            </h2>
-            <p className="text-gray-300 text-xl">Rewards for the coding champions</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            {/* 1st */}
-            <div
-              className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 p-10 rounded-3xl border-2 border-yellow-500/50 text-center card-3d glow-box scroll-reveal"
-              style={{ boxShadow: "0 0 60px rgba(255, 215, 0, 0.4)" }}
-            >
-              <div className="w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-5xl floating hexagon pulse-glow">
-                <i className="fas fa-crown" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 orbitron text-yellow-400">1st Place</h3>
-              <div className="text-5xl font-black text-white mb-6 orbitron">$500</div>
-              <ul className="space-y-3 text-gray-200">
-                <li><i className="fas fa-check-circle text-yellow-400 mr-2" />Cash Prize</li>
-                <li><i className="fas fa-check-circle text-yellow-400 mr-2" />Winner Trophy</li>
-                <li><i className="fas fa-check-circle text-yellow-400 mr-2" />Certificates</li>
-                <li><i className="fas fa-check-circle text-yellow-400 mr-2" />Internship Opportunities</li>
-                <li><i className="fas fa-check-circle text-yellow-400 mr-2" />Mentorship Program</li>
-              </ul>
-            </div>
-
-            {/* 2nd */}
-            <div
-              className="bg-gradient-to-br from-gray-400/20 to-gray-500/20 p-10 rounded-3xl border-2 border-gray-400/50 text-center card-3d glow-box scroll-reveal"
-              style={{ boxShadow: "0 0 60px rgba(192, 192, 192, 0.4)" }}
-            >
-              <div className="w-28 h-28 bg-gradient-to-br from-gray-300 to-gray-500 rounded-full flex items-center justify-center mx-auto mb-6 text-5xl floating hexagon pulse-glow">
-                <i className="fas fa-medal" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 orbitron text-gray-300">2nd Place</h3>
-              <div className="text-5xl font-black text-white mb-6 orbitron">$300</div>
-              <ul className="space-y-3 text-gray-200">
-                <li><i className="fas fa-check-circle text-gray-400 mr-2" />Cash Prize</li>
-                <li><i className="fas fa-check-circle text-gray-400 mr-2" />Runner-up Trophy</li>
-                <li><i className="fas fa-check-circle text-gray-400 mr-2" />Certificates</li>
-                <li><i className="fas fa-check-circle text-gray-400 mr-2" />Tech Swag</li>
-                <li><i className="fas fa-check-circle text-gray-400 mr-2" />Workshop Access</li>
-              </ul>
-            </div>
-
-            {/* 3rd */}
-            <div
-              className="bg-gradient-to-br from-orange-600/20 to-red-600/20 p-10 rounded-3xl border-2 border-orange-500/50 text-center card-3d glow-box scroll-reveal"
-              style={{ boxShadow: "0 0 60px rgba(205, 127, 50, 0.4)" }}
-            >
-              <div className="w-28 h-28 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 text-5xl floating hexagon pulse-glow">
-                <i className="fas fa-award" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 orbitron text-orange-400">3rd Place</h3>
-              <div className="text-5xl font-black text-white mb-6 orbitron">$200</div>
-              <ul className="space-y-3 text-gray-200">
-                <li><i className="fas fa-check-circle text-orange-400 mr-2" />Cash Prize</li>
-                <li><i className="fas fa-check-circle text-orange-400 mr-2" />Recognition Trophy</li>
-                <li><i className="fas fa-check-circle text-orange-400 mr-2" />Certificates</li>
-                <li><i className="fas fa-check-circle text-orange-400 mr-2" />Tech Swag</li>
-                <li><i className="fas fa-check-circle text-orange-400 mr-2" />Community Access</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Register section (IMPORTANT: link to /register page) */}
+      {/* Register */}
       <section id="register" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 scroll-reveal">
@@ -818,11 +494,26 @@ export default function HomePage() {
               <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-red-500/20">
                 <h4 className="text-lg font-bold text-red-400 mb-3 orbitron">What You Need:</h4>
                 <ul className="space-y-2 text-gray-300">
-                  <li><i className="fas fa-check text-red-400 mr-3" />Team of 2-4 students from the same school</li>
-                  <li><i className="fas fa-check text-red-400 mr-3" />Laptop for each team member</li>
-                  <li><i className="fas fa-check text-red-400 mr-3" />Basic coding knowledge in any language</li>
-                  <li><i className="fas fa-check text-red-400 mr-3" />Passion for innovation and problem-solving</li>
-                  <li><i className="fas fa-check text-red-400 mr-3" />School ID for verification</li>
+                  <li>
+                    <i className="fas fa-check text-red-400 mr-3" />
+                    Team of 2-4 students from the same school
+                  </li>
+                  <li>
+                    <i className="fas fa-check text-red-400 mr-3" />
+                    Laptop for each team member
+                  </li>
+                  <li>
+                    <i className="fas fa-check text-red-400 mr-3" />
+                    Basic coding knowledge in any language
+                  </li>
+                  <li>
+                    <i className="fas fa-check text-red-400 mr-3" />
+                    Passion for innovation and problem-solving
+                  </li>
+                  <li>
+                    <i className="fas fa-check text-red-400 mr-3" />
+                    School ID for verification
+                  </li>
                 </ul>
               </div>
 
@@ -832,7 +523,8 @@ export default function HomePage() {
                   <div>
                     <h4 className="text-lg font-bold text-purple-400 mb-2">Registration Info</h4>
                     <p className="text-gray-300 text-sm">
-                      Registration closes [Date]. Limited spots available - first come, first served!
+                      Registration closes <span className="text-white font-semibold">Feb 28</span>. Limited spots — first
+                      come, first served!
                     </p>
                   </div>
                 </div>
@@ -853,14 +545,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer (short but same vibe) */}
-      <footer className="bg-gray-950 text-gray-400 py-12 px-4 border-t border-red-500/20">
-        <div className="max-w-6xl mx-auto">
-          <div className="border-t border-gray-800 pt-8 text-center scroll-reveal">
-            <p className="text-sm">
-              &copy; 2025 InfernoX 1.0. Organized by{" "}
-              <span className="text-red-400 font-semibold">Robotics Club of LNBTI</span>. All rights reserved.
-            </p>
+      {/* ✅ Simple Footer (red + purple accents, no color change) */}
+      <footer className="bg-gray-950/80 border-t border-red-500/20">
+        <div className="max-w-6xl mx-auto px-6 py-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <p className="text-white font-semibold orbitron">
+                InfernoX <span className="text-red-400">1.0</span>{" "}
+                <span className="text-purple-400">Hackathon</span>
+              </p>
+              <p className="text-gray-400 text-sm mt-1">
+                Organized by <span className="text-red-400 font-semibold">Robotics Club of LNBTI</span>
+              </p>
+            </div>
+
+            <div className="flex items-center gap-4 text-sm">
+              <button onClick={() => scrollToId("about")} className="text-gray-300 hover:text-red-400 transition">
+                About
+              </button>
+              <span className="text-purple-500/60">•</span>
+              <button onClick={() => scrollToId("timeline")} className="text-gray-300 hover:text-purple-400 transition">
+                Timeline
+              </button>
+              <span className="text-purple-500/60">•</span>
+              <button onClick={() => scrollToId("register")} className="text-gray-300 hover:text-red-400 transition">
+                Register
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+            © {new Date().getFullYear()} InfernoX 1.0 • All rights reserved
           </div>
         </div>
       </footer>
