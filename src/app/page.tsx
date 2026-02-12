@@ -133,11 +133,46 @@ export default function HomePage() {
     []
   );
 
+  // Prizes (NEW)
+  const prizes = useMemo(
+    () => [
+      {
+        title: "Champion",
+        subtitle: "Overall Winner",
+        icon: "fa-trophy",
+        color: "from-yellow-400 to-orange-500",
+        border: "border-yellow-500/30",
+      },
+      {
+        title: "1st Runner-up",
+        subtitle: "Second Place",
+        icon: "fa-medal",
+        color: "from-purple-500 to-pink-600",
+        border: "border-purple-500/30",
+      },
+      {
+        title: "2nd Runner-up",
+        subtitle: "Third Place",
+        icon: "fa-award",
+        color: "from-red-500 to-orange-600",
+        border: "border-red-500/30",
+      },
+      {
+        title: "Participation Certificate",
+        subtitle: "All Phase I shortlisted finalists",
+        icon: "fa-certificate",
+        color: "from-green-500 to-teal-600",
+        border: "border-green-500/30",
+      },
+    ],
+    []
+  );
+
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
 
-    const offset = 80; // navbar height
+    const offset = 96;
     const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
 
     window.scrollTo({ top, behavior: "smooth" });
@@ -161,38 +196,21 @@ export default function HomePage() {
       }, 80);
     }
 
-    // Navbar hide/show + shadow
+    // Navbar shadow on scroll (NO hiding)
     const nav = document.querySelector("nav") as HTMLElement | null;
-    let lastScrollTop = 0;
-    let ticking = false;
 
     const updateNavbar = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
       if (nav) {
-        if (scrollTop > 50) nav.classList.add("shadow-2xl", "shadow-red-500/20");
+        nav.style.transform = "translateY(0)";
+        nav.style.transition = "box-shadow 0.25s ease";
+        if (scrollTop > 30) nav.classList.add("shadow-2xl", "shadow-red-500/20");
         else nav.classList.remove("shadow-2xl", "shadow-red-500/20");
-
-        if (scrollTop > lastScrollTop && scrollTop > 500) {
-          nav.style.transform = "translateY(-100%)";
-        } else {
-          nav.style.transform = "translateY(0)";
-        }
-        nav.style.transition = "transform 0.3s ease";
-      }
-
-      lastScrollTop = scrollTop;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateNavbar);
-        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    updateNavbar();
+    window.addEventListener("scroll", updateNavbar, { passive: true });
 
     // Scroll reveal
     const revealEls = document.querySelectorAll(".scroll-reveal");
@@ -235,7 +253,7 @@ export default function HomePage() {
     timelineItems.forEach((item) => timelineObs.observe(item));
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", updateNavbar);
       revealObs.disconnect();
       timelineObs.disconnect();
     };
@@ -243,52 +261,75 @@ export default function HomePage() {
 
   return (
     <main className="text-white">
-      {/* Loading Bar */}
       <div className="loading-bar" id="loadingBar" />
-
-      {/* Flame Particles Container */}
       <div id="flames-container" className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }} />
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-gray-900/80 backdrop-blur-lg border-b border-red-500/20">
+      <nav className="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-16 gap-4">
+
+            {/* Left: InfernoX */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 group"
               aria-label="Go to top"
             >
-              <div className="relative h-10 w-40 sm:h-11 sm:w-48">
+              <div className="relative h-8 w-36 sm:h-9 sm:w-40 transition-transform duration-300 group-hover:scale-105">
                 <Image src="/infernox-logo.png" alt="InfernoX 1.0" fill priority className="object-contain" />
               </div>
             </button>
 
+            {/* Center: Links */}
             <div className="hidden md:flex space-x-8">
               {navLinks.map((l) => (
-                <button key={l.id} onClick={() => scrollToId(l.id)} className="hover:text-red-400 transition">
+                <button
+                  key={l.id}
+                  onClick={() => scrollToId(l.id)}
+                  className="text-gray-200/90 hover:text-red-300 transition-all duration-300 text-[14px] font-medium relative
+                    after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:-bottom-1 after:left-0
+                    after:bg-gradient-to-r after:from-red-500 after:to-orange-400
+                    after:origin-bottom-right after:transition-transform after:duration-300
+                    hover:after:scale-x-100 hover:after:origin-bottom-left"
+                >
                   {l.label}
                 </button>
               ))}
             </div>
 
+            {/* Right: Logos (3) */}
+            <div className="flex items-center gap-2">
+              {/* LNBTI - white plate */}
+              <div className="relative w-14 h-8 rounded-md bg-white/95 border border-white/20 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
+                <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
+              </div>
+
+              {/* Robotics Club */}
+              <div className="relative w-11 h-8 rounded-md bg-white/5 border border-white/10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
+                <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
+              </div>
+            </div>
+
+            {/* Mobile */}
             <button
               onClick={() => setMobileOpen((s) => !s)}
-              className="md:hidden text-red-400"
+              className="md:hidden text-red-300 hover:text-orange-300 transition-colors"
               aria-label="Toggle menu"
             >
-              <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-2xl`} />
+              <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-xl`} />
             </button>
+
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <div className={`${mobileOpen ? "block" : "hidden"} md:hidden bg-gray-900/95 backdrop-blur-lg`}>
-          <div className="px-4 py-4 space-y-3">
+        {/* Mobile Menu (dark glass) */}
+        <div className={`${mobileOpen ? "block animate-slideDown" : "hidden"} md:hidden bg-slate-950/75 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30`}>
+          <div className="px-4 pt-4 pb-4 space-y-3">
             {navLinks.map((l) => (
               <button
                 key={l.id}
                 onClick={() => scrollToId(l.id)}
-                className="block w-full text-left hover:text-red-400 transition py-2"
+                className="block w-full text-left text-gray-100/90 hover:text-red-300 hover:bg-white/5 transition-all duration-300 py-2 px-3 rounded-lg"
               >
                 {l.label}
               </button>
@@ -407,9 +448,9 @@ export default function HomePage() {
 
               <div className="grid gap-4 mt-8">
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20 glow-box">
-                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we’re solving</h3>
+                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we're solving</h3>
                   <p className="text-gray-300">
-                    Students often build projects without a real problem focus, so ideas don’t translate into impact.
+                    Students often build projects without a real problem focus, so ideas don't translate into impact.
                   </p>
                 </div>
 
@@ -438,7 +479,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* REAL HACKATHON PHOTO CARD (put image in /public/hackathon.png) */}
             <div className="relative group scroll-reveal">
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 to-purple-500/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-300" />
 
@@ -470,9 +510,7 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <p className="text-gray-200/80 text-sm mt-3">
-                    Collaborate, iterate, and ship something real—together.
-                  </p>
+                  <p className="text-gray-200/80 text-sm mt-3">Collaborate, iterate, and ship something real—together.</p>
                 </div>
               </div>
             </div>
@@ -480,7 +518,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Tracks (NEW) */}
+      {/* Tracks */}
       <section id="tracks" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14 scroll-reveal">
@@ -495,11 +533,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {tracks.map((t) => (
               <div
                 key={t.title}
-                className={`scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${t.border} glow-box card-3d`}
+                className={`scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${t.border} glow-box card-3d
+                  w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[420px]`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/25 to-purple-500/25 border border-red-500/20 flex items-center justify-center">
@@ -573,121 +612,274 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Register (SHORTER HEIGHT: distribute in width) */}
-      <section id="register" className="py-20 px-4 hero-gradient relative flame-bg">
+      {/* Prizes (NEW) */}
+      <section id="prizes" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 scroll-reveal">
-            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Join the Battle</span>
+          <div className="text-center mb-14 scroll-reveal">
+            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Awards</span>
             <h2 className="text-5xl font-bold mt-4 mb-4 orbitron">
-              Register Your <span className="text-gradient-animated">Team</span>
+              Prizes & <span className="text-gradient-animated">Recognition</span>
             </h2>
-            <p className="text-gray-300 text-lg">Secure your spot in the inferno</p>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+              Finalists shortlisted from <span className="text-purple-300 font-semibold">Phase I</span> will all receive a{" "}
+              <span className="text-red-300 font-semibold">Participation Certificate</span>.
+            </p>
           </div>
 
-          <div className="bg-gradient-to-br from-red-500/10 to-purple-500/10 p-8 md:p-10 rounded-3xl border-2 border-red-500/30 neon-border scroll-reveal">
-            <div className="grid lg:grid-cols-3 gap-8 items-start">
-              {/* Left: header */}
-              <div className="text-center lg:text-left">
-                <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto lg:mx-0 mb-5 text-3xl floating hexagon pulse-glow">
-                  <i className="fas fa-fire" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {prizes.map((p) => (
+              <div
+                key={p.title}
+                className={`scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${p.border} glow-box card-3d`}
+              >
+                <div
+                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center text-2xl shadow-lg shadow-black/25`}
+                >
+                  <i className={`fas ${p.icon}`} />
                 </div>
-                <h3 className="text-3xl font-bold mb-2 orbitron text-red-400">Team Registration</h3>
-                <p className="text-gray-300">Teams of 2–4 members • Open to all school students</p>
-
-                <div className="mt-5 flex flex-wrap gap-2 justify-center lg:justify-start text-xs">
-                  <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
-                    FREE
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-gray-100">
-                    Limited Spots
-                  </span>
-                  <span className="px-3 py-1 rounded-full bg-gray-900/50 border border-red-500/20 text-gray-200">
-                    Deadline: Feb 28
-                  </span>
-                </div>
+                <h3 className="text-xl font-bold mt-4 orbitron text-purple-100">{p.title}</h3>
+                <p className="text-gray-300 mt-2">{p.subtitle}</p>
               </div>
+            ))}
+          </div>
 
-              {/* Middle: requirements */}
-              <div className="bg-gray-800/45 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20">
-                <h4 className="text-lg font-bold text-red-400 mb-3 orbitron">Requirements</h4>
-                <ul className="grid sm:grid-cols-2 gap-2 text-gray-300 text-sm">
-                  <li className="flex items-start gap-2">
-                    <i className="fas fa-check text-red-400 mt-1" />
-                    <span>2–4 students (same school)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <i className="fas fa-check text-red-400 mt-1" />
-                    <span>Laptop(s) for the team</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <i className="fas fa-check text-red-400 mt-1" />
-                    <span>Basic coding knowledge</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <i className="fas fa-check text-red-400 mt-1" />
-                    <span>School ID verification</span>
-                  </li>
-                </ul>
-              </div>
+          <div className="mt-10 text-center scroll-reveal">
+            <button
+              onClick={() => scrollToId("register")}
+              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-red-500/30 bg-red-500/10 hover:bg-red-500/15 transition"
+            >
+              <i className="fas fa-fire text-red-300" />
+              <span className="font-semibold">Join & Compete</span>
+            </button>
+          </div>
+        </div>
+      </section>
 
-              {/* Right: CTA */}
-              <div className="bg-gray-900/40 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/25">
-                <div className="flex items-start gap-3 mb-4">
-                  <i className="fas fa-info-circle text-purple-400 text-xl mt-1" />
-                  <div>
-                    <h4 className="text-lg font-bold text-purple-400 mb-1">How it works</h4>
-                    <p className="text-gray-300 text-sm">Register your team, choose a track, and submit your proposal.</p>
+      {/* Register (Enhanced) */}
+      <section id="register" className="py-16 px-4 hero-gradient relative flame-bg">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8 scroll-reveal">
+            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
+              Join the Battle
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-3 orbitron">
+              Register Your <span className="text-gradient-animated">Team</span>
+            </h2>
+            <p className="text-gray-300 text-base md:text-lg">Secure your spot in the inferno</p>
+          </div>
+
+          {/* Outer frame (reduced glow + padding) */}
+          <div className="relative scroll-reveal">
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500/25 via-orange-500/10 to-purple-500/20 blur-xl" />
+            <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-6 md:p-8 overflow-hidden">
+              {/* subtle sweep */}
+              <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
+
+              <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+                {/* Left - Team Registration */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
+                      <i className="fas fa-fire" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-xl md:text-2xl font-bold orbitron text-red-300 leading-tight">
+                        Team Registration
+                      </h3>
+                      <p className="text-gray-300 text-sm mt-1">
+                        Teams of <span className="text-white font-semibold">2–5</span> • Open to all school students
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/25 text-gray-100 text-xs">
+                      FREE
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/25 text-gray-100 text-xs">
+                      Limited Spots
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200 text-xs">
+                      Deadline: Feb 28
+                    </span>
+                  </div>
+
+                  {/* Small info row (compact) */}
+                  <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                      <div className="text-xs font-bold text-red-300 orbitron">2–5</div>
+                      <div className="text-[11px] text-gray-300">Members</div>
+                    </div>
+                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                      <div className="text-xs font-bold text-purple-300 orbitron">5</div>
+                      <div className="text-[11px] text-gray-300">Tracks</div>
+                    </div>
+                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                      <div className="text-xs font-bold text-orange-300 orbitron">2</div>
+                      <div className="text-[11px] text-gray-300">Phases</div>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
+                    <i className="fas fa-lightbulb text-yellow-300/70 mr-1" /> No registration fee
                   </div>
                 </div>
 
-                <Link
-                  href="/register"
-                  className="block text-center btn-inferno px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-[1.02]"
-                >
-                  <i className="fas fa-rocket mr-2" />
-                  Register Now
-                </Link>
+                {/* Middle - Requirements */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-list-check text-red-300 text-sm" />
+                    </div>
+                    <h4 className="text-base md:text-lg font-bold text-red-300 orbitron">Requirements</h4>
+                  </div>
 
-                <p className="text-gray-400 text-xs text-center mt-3">
-                  Make sure you have your team leader contact details ready.
-                </p>
+                  <ul className="grid sm:grid-cols-1 gap-2 text-gray-300 text-sm flex-grow">
+                    {[
+                      "2–5 students (same school)",
+                      "Laptop(s) for the team",
+                      "Basic coding knowledge",
+                      "School ID verification",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
+                        <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
+                        <span className="text-xs md:text-sm leading-tight">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
+                    <i className="fas fa-plug mr-1 text-red-300/70" /> 
+                    Tip: Bring charger 
+                  </div>
+                </div>
+
+                {/* Right - How it works + CTA */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-info-circle text-purple-300" />
+                    </div>
+                    <div>
+                      <h4 className="text-base md:text-lg font-bold text-purple-300 orbitron mb-1">How it works</h4>
+                      <p className="text-gray-300 text-xs md:text-sm">
+                        Register, choose a track, and submit your proposal.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Compact steps */}
+                  <div className="grid gap-2 text-sm flex-grow">
+                    {[
+                      { n: "1", t: "Register your team" },
+                      { n: "2", t: "Pick a track" },
+                      { n: "3", t: "Submit proposal" },
+                    ].map((s) => (
+                      <div key={s.n} className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
+                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-red-500/60 to-purple-500/60 flex items-center justify-center text-xs font-bold orbitron flex-shrink-0">
+                          {s.n}
+                        </div>
+                        <span className="text-gray-200/90 text-xs md:text-sm">{s.t}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link
+                    href="/register"
+                    className="mt-4 block text-center btn-inferno px-6 py-3 rounded-full font-bold text-sm md:text-base hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-[1.02]"
+                  >
+                    <i className="fas fa-rocket mr-2" />
+                    Register Now
+                  </Link>
+
+                  {/* Compact certificate note */}
+                  <div className="mt-3 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2.5 text-xs text-gray-300">
+                    <i className="fas fa-certificate text-red-300 mr-1" />
+                    <span className="text-gray-100 font-semibold">Phase 1 finalists</span> get 
+                    <span className="text-red-300 font-semibold ml-1">Certificate</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Bottom note - compact */}
+              <div className="mt-4 text-center text-[11px] text-gray-400 border-t border-white/10 pt-3">
+                <i className="fas fa-clock mr-1 text-purple-300/70" /> 
+                Registration deadline: <span className="text-white font-medium">February 28, 2024</span> • 
+                Don't miss out!
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Simple Footer */}
-      <footer className="bg-gray-950/80 border-t border-red-500/20">
-        <div className="max-w-6xl mx-auto px-6 py-10">
+      {/* Footer (match DARK glass navbar + reduced height) */}
+      <footer className="bg-slate-950/70 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30">
+        <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Left */}
             <div className="text-center md:text-left">
-              <p className="text-white font-semibold orbitron">
-                InfernoX <span className="text-red-400">1.0</span>{" "}
-                <span className="text-purple-400">Hackathon</span>
+              <div className="flex items-center justify-center md:justify-start gap-3">
+                <div className="relative h-8 w-32">
+                  <Image src="/infernox-logo.png" alt="InfernoX" fill className="object-contain" />
+                </div>
+              </div>
+
+              <p className="text-gray-300/85 text-sm mt-2 max-w-md">
+                Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through
+                structured problem-solving.
               </p>
-              <p className="text-gray-400 text-sm mt-1">
-                Organized by <span className="text-red-400 font-semibold">Robotics Club of LNBTI</span>
-              </p>
+
+              <div className="mt-3 inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200/90">
+                Organized by Robotics Club of LNBTI
+              </div>
             </div>
 
-            <div className="flex items-center gap-4 text-sm">
-              <button onClick={() => scrollToId("about")} className="text-gray-300 hover:text-red-400 transition">
-                About
-              </button>
-              <span className="text-purple-500/60">•</span>
-              <button onClick={() => scrollToId("tracks")} className="text-gray-300 hover:text-purple-400 transition">
-                Tracks
-              </button>
-              <span className="text-purple-500/60">•</span>
-              <button onClick={() => scrollToId("register")} className="text-gray-300 hover:text-red-400 transition">
-                Register
-              </button>
+            {/* Right */}
+            <div className="flex flex-col items-center md:items-end gap-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-sm">
+                <button onClick={() => scrollToId("about")} className="text-gray-200/85 hover:text-red-300 transition">
+                  About
+                </button>
+                <button onClick={() => scrollToId("tracks")} className="text-gray-200/85 hover:text-red-300 transition">
+                  Tracks
+                </button>
+                <button onClick={() => scrollToId("timeline")} className="text-gray-200/85 hover:text-red-300 transition">
+                  Timeline
+                </button>
+                <button onClick={() => scrollToId("prizes")} className="text-gray-200/85 hover:text-red-300 transition">
+                  Prizes
+                </button>
+                <button onClick={() => scrollToId("register")} className="text-gray-200/85 hover:text-red-300 transition">
+                  Register
+                </button>
+              </div>
+
+              {/* Logos */}
+              <div className="flex items-center gap-2">
+                <div className="relative w-14 h-8 rounded-md bg-white/95 border border-white/20 overflow-hidden">
+                  <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
+                </div>
+                <span className="text-xs text-gray-400">×</span>
+                <div className="relative w-9 h-9 rounded-md bg-white/5 border border-white/10 overflow-hidden">
+                  <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
-            © {new Date().getFullYear()} InfernoX 1.0 • All rights reserved
+          {/* Bottom bar (short) */}
+          <div className="mt-5 pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
+            <p className="text-xs text-gray-400">
+              © {new Date().getFullYear()} InfernoX 1.0. All rights reserved.
+            </p>
+
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-gray-400">Version 1.0.0</span>
+              <span className="text-gray-600">|</span>
+              <span className="text-xs bg-gradient-to-r from-red-400 to-orange-300 bg-clip-text text-transparent font-semibold">
+                #InfernoX
+              </span>
+            </div>
           </div>
         </div>
       </footer>
