@@ -79,9 +79,9 @@ export default function HomePage() {
       {
         icon: "1",
         color: "from-red-500 to-orange-600",
-        title: "Website Launch",
+        title: "Official Launch of InfernoX 1.0",
         time: "Feb 8",
-        text: "InfernoX 1.0 website goes live and the event officially opens.",
+        text: "InfernoX 1.0 officially launches.",
         border: "border-red-500/30",
         titleColor: "text-red-400",
       },
@@ -89,7 +89,7 @@ export default function HomePage() {
         icon: "2",
         color: "from-purple-500 to-pink-600",
         title: "Registrations",
-        time: "Feb 8 – Feb 28",
+        time: "Feb 12 – Feb 28",
         text: "Teams register and confirm participation before the deadline.",
         border: "border-purple-500/30",
         titleColor: "text-purple-400",
@@ -134,40 +134,37 @@ export default function HomePage() {
     []
   );
 
-  // Prizes (NEW)
-  const prizes = useMemo(
-    () => [
-      {
-        title: "Champion",
-        subtitle: "Overall Winner",
-        icon: "fa-trophy",
-        color: "from-yellow-400 to-orange-500",
-        border: "border-yellow-500/30",
-      },
-      {
-        title: "1st Runner-up",
-        subtitle: "Second Place",
-        icon: "fa-medal",
-        color: "from-purple-500 to-pink-600",
-        border: "border-purple-500/30",
-      },
-      {
-        title: "2nd Runner-up",
-        subtitle: "Third Place",
-        icon: "fa-award",
-        color: "from-red-500 to-orange-600",
-        border: "border-red-500/30",
-      },
-      {
-        title: "Participation Certificate",
-        subtitle: "All Phase I shortlisted finalists",
-        icon: "fa-certificate",
-        color: "from-green-500 to-teal-600",
-        border: "border-green-500/30",
-      },
-    ],
-    []
-  );
+  // ✅ UPDATED PRIZES + CERTIFICATES INFO
+  const prizes = [
+    {
+      title: "1st Place",
+      subtitle: "Cash Prize – 250,000 + Winner Certificate",
+      icon: "fa-trophy",
+      color: "from-yellow-400 to-orange-500",
+      border: "border-yellow-400/40",
+    },
+    {
+      title: "2nd Place",
+      subtitle: "Cash Prize – 150,000 + Winner Certificate",
+      icon: "fa-medal",
+      color: "from-gray-300 to-gray-500",
+      border: "border-gray-400/40",
+    },
+    {
+      title: "3rd Place",
+      subtitle: "Cash Prize – 100,000 + Winner Certificate",
+      icon: "fa-award",
+      color: "from-amber-600 to-yellow-700",
+      border: "border-amber-500/40",
+    },
+    {
+      title: "4th & 5th Best Teams",
+      subtitle: "Cash Prize – 50,000 each + Winner Certificate",
+      icon: "fa-star",
+      color: "from-purple-500 to-pink-500",
+      border: "border-purple-400/40",
+    },
+  ];
 
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
@@ -299,10 +296,10 @@ export default function HomePage() {
 
             {/* Right: Logos */}
             <div className="flex items-center gap-2">
-              <div className="relative w-14 h-8 rounded-md border border-white/20 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
+              <div className="relative w-19 h-10 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
                 <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
               </div>
-              <div className="relative w-11 h-8 rounded-md bg-white/5 border border-white/10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
+              <div className="relative w-13 h-10  shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
                 <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
               </div>
             </div>
@@ -320,7 +317,9 @@ export default function HomePage() {
 
         {/* Mobile Menu */}
         <div
-          className={`${mobileOpen ? "block animate-slideDown" : "hidden"} md:hidden bg-slate-950/75 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30`}
+          className={`${
+            mobileOpen ? "block animate-slideDown" : "hidden"
+          } md:hidden bg-slate-950/75 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30`}
         >
           <div className="px-4 pt-4 pb-4 space-y-3">
             {navLinks.map((l) => (
@@ -482,7 +481,13 @@ export default function HomePage() {
 
               <div className="relative rounded-3xl overflow-hidden border-2 border-red-500/30 neon-border card-3d">
                 <div className="relative w-full h-96">
-                  <Image src="/hackathon.png" alt="Students collaborating during a hackathon" fill priority className="object-cover" />
+                  <Image
+                    src="/hackathon.png"
+                    alt="Students collaborating during a hackathon"
+                    fill
+                    priority
+                    className="object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                 </div>
 
@@ -613,8 +618,10 @@ export default function HomePage() {
               Prizes & <span className="text-gradient-animated">Recognition</span>
             </h2>
             <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-              Finalists shortlisted from <span className="text-purple-300 font-semibold">Phase I</span> will all receive a{" "}
-              <span className="text-red-300 font-semibold">Participation Certificate</span>.
+              All <span className="text-purple-300 font-semibold">Finalists</span> will receive a{" "}
+              <span className="text-red-300 font-semibold">Finalist Certificate</span>. All{" "}
+              <span className="text-orange-300 font-semibold">Winners</span> will receive a{" "}
+              <span className="text-red-300 font-semibold">Winner Certificate</span>.
             </p>
           </div>
 
@@ -648,145 +655,161 @@ export default function HomePage() {
       </section>
 
       {/* Register */}
-      <section id="register" className="py-16 px-4 hero-gradient relative flame-bg">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 scroll-reveal">
-            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
-              Join the Battle
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-3 orbitron">
-              Register Your <span className="text-gradient-animated">Team</span>
-            </h2>
-            <p className="text-gray-300 text-base md:text-lg">Secure your spot in the inferno</p>
+<section id="register" className="py-16 px-4 hero-gradient relative flame-bg">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-8 scroll-reveal">
+      <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
+        Join the Battle
+      </span>
+      <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-3 orbitron">
+        Register Your <span className="text-gradient-animated">Team</span>
+      </h2>
+      <p className="text-gray-300 text-base md:text-lg">Secure your spot in the inferno</p>
+    </div>
+
+    <div className="relative scroll-reveal">
+      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500/25 via-orange-500/10 to-purple-500/20 blur-xl" />
+      <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-6 md:p-8 overflow-hidden">
+        <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
+
+        <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+          {/* Column 1: Team Registration */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
+                <i className="fas fa-fire" />
+              </div>
+              <div className="min-w-0">
+                <h3 className="text-xl md:text-2xl font-bold orbitron text-red-300 leading-tight">
+                  Team Registration
+                </h3>
+                <p className="text-gray-300 text-sm mt-1">
+                  Teams of <span className="text-white font-semibold">2–5</span> • Open to all school students
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/25 text-gray-100 text-xs">
+                FREE
+              </span>
+              <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/25 text-gray-100 text-xs">
+                Limited Spots
+              </span>
+              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200 text-xs">
+                Deadline: Feb 28
+              </span>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                <div className="text-xs font-bold text-red-300 orbitron">2–5</div>
+                <div className="text-[11px] text-gray-300">Members</div>
+              </div>
+              <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                <div className="text-xs font-bold text-purple-300 orbitron">5</div>
+                <div className="text-[11px] text-gray-300">Tracks</div>
+              </div>
+              <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
+                <div className="text-xs font-bold text-orange-300 orbitron">2</div>
+                <div className="text-[11px] text-gray-300">Phases</div>
+              </div>
+            </div>
+
+            {/* ✅ MOVED HERE: Registration deadline line (inside Team Registration column) */}
+            <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
+              <i className="fas fa-clock mr-1 text-purple-300/70" />
+              Registration deadline:{" "}
+              <span className="text-white font-medium">February 28, 2024</span> • Don&apos;t miss out!
+            </div>
+
+            <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
+              <i className="fas fa-lightbulb text-yellow-300/70 mr-1" /> No registration fee
+            </div>
           </div>
 
-          <div className="relative scroll-reveal">
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500/25 via-orange-500/10 to-purple-500/20 blur-xl" />
-            <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-6 md:p-8 overflow-hidden">
-              <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
-
-              <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
-                      <i className="fas fa-fire" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="text-xl md:text-2xl font-bold orbitron text-red-300 leading-tight">
-                        Team Registration
-                      </h3>
-                      <p className="text-gray-300 text-sm mt-1">
-                        Teams of <span className="text-white font-semibold">2–5</span> • Open to all school students
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/25 text-gray-100 text-xs">
-                      FREE
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/25 text-gray-100 text-xs">
-                      Limited Spots
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200 text-xs">
-                      Deadline: Feb 28
-                    </span>
-                  </div>
-
-                  <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
-                      <div className="text-xs font-bold text-red-300 orbitron">2–5</div>
-                      <div className="text-[11px] text-gray-300">Members</div>
-                    </div>
-                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
-                      <div className="text-xs font-bold text-purple-300 orbitron">5</div>
-                      <div className="text-[11px] text-gray-300">Tracks</div>
-                    </div>
-                    <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
-                      <div className="text-xs font-bold text-orange-300 orbitron">2</div>
-                      <div className="text-[11px] text-gray-300">Phases</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
-                    <i className="fas fa-lightbulb text-yellow-300/70 mr-1" /> No registration fee
-                  </div>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-list-check text-red-300 text-sm" />
-                    </div>
-                    <h4 className="text-base md:text-lg font-bold text-red-300 orbitron">Requirements</h4>
-                  </div>
-
-                  <ul className="grid sm:grid-cols-1 gap-2 text-gray-300 text-sm flex-grow">
-                    {["2–5 students (same school)", "Laptop(s) for the team", "Basic coding knowledge", "School ID verification"].map(
-                      (item) => (
-                        <li key={item} className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
-                          <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
-                          <span className="text-xs md:text-sm leading-tight">{item}</span>
-                        </li>
-                      )
-                    )}
-                  </ul>
-
-                  <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
-                    <i className="fas fa-plug mr-1 text-red-300/70" /> Tip: Bring charger
-                  </div>
-                </div>
-
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-info-circle text-purple-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-base md:text-lg font-bold text-purple-300 orbitron mb-1">How it works</h4>
-                      <p className="text-gray-300 text-xs md:text-sm">Register, choose a track, and submit your proposal.</p>
-                    </div>
-                  </div>
-
-                  <div className="grid gap-2 text-sm flex-grow">
-                    {[
-                      { n: "1", t: "Register your team" },
-                      { n: "2", t: "Pick a track" },
-                      { n: "3", t: "Submit proposal" },
-                    ].map((s) => (
-                      <div key={s.n} className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-red-500/60 to-purple-500/60 flex items-center justify-center text-xs font-bold orbitron flex-shrink-0">
-                          {s.n}
-                        </div>
-                        <span className="text-gray-200/90 text-xs md:text-sm">{s.t}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link
-                    href="/register"
-                    className="mt-4 block text-center btn-inferno px-6 py-3 rounded-full font-bold text-sm md:text-base hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-[1.02]"
-                  >
-                    <i className="fas fa-rocket mr-2" />
-                    Register Now
-                  </Link>
-
-                  <div className="mt-3 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2.5 text-xs text-gray-300">
-                    <i className="fas fa-certificate text-red-300 mr-1" />
-                    <span className="text-gray-100 font-semibold">Phase 1 finalists</span> get{" "}
-                    <span className="text-red-300 font-semibold ml-1">Certificate</span>
-                  </div>
-                </div>
+          {/* Column 2: Requirements */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
+                <i className="fas fa-list-check text-red-300 text-sm" />
               </div>
+              <h4 className="text-base md:text-lg font-bold text-red-300 orbitron">Requirements</h4>
+            </div>
 
-              <div className="mt-4 text-center text-[11px] text-gray-400 border-t border-white/10 pt-3">
-                <i className="fas fa-clock mr-1 text-purple-300/70" />
-                Registration deadline: <span className="text-white font-medium">February 28, 2024</span> • Don&apos;t miss out!
+            <ul className="grid sm:grid-cols-1 gap-2 text-gray-300 text-sm flex-grow">
+              {["2–5 students (same school)", "Laptop(s) for the team", "Basic coding knowledge"].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5"
+                >
+                  <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
+                  <span className="text-xs md:text-sm leading-tight">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
+              <i className="fas fa-plug mr-1 text-red-300/70" /> Tip: Bring charger
+            </div>
+          </div>
+
+          {/* Column 3: How it works */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
+                <i className="fas fa-info-circle text-purple-300" />
               </div>
+              <div>
+                <h4 className="text-base md:text-lg font-bold text-purple-300 orbitron mb-1">How it works</h4>
+                <p className="text-gray-300 text-xs md:text-sm">Register, choose a track, and submit your proposal.</p>
+              </div>
+            </div>
+
+            <div className="grid gap-2 text-sm flex-grow">
+              {[
+                { n: "1", t: "Register your team" },
+                { n: "2", t: "Pick a track" },
+                { n: "3", t: "Submit proposal" },
+              ].map((s) => (
+                <div
+                  key={s.n}
+                  className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-red-500/60 to-purple-500/60 flex items-center justify-center text-xs font-bold orbitron flex-shrink-0">
+                    {s.n}
+                  </div>
+                  <span className="text-gray-200/90 text-xs md:text-sm">{s.t}</span>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href="/register"
+              className="mt-4 block text-center btn-inferno px-6 py-3 rounded-full font-bold text-sm md:text-base hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-[1.02]"
+            >
+              <i className="fas fa-rocket mr-2" />
+              Register Now
+            </Link>
+
+            {/* ✅ UPDATED: finalist + winner certificates message */}
+            <div className="mt-3 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2.5 text-xs text-gray-300">
+              <i className="fas fa-certificate text-red-300 mr-1" />
+              <span className="text-gray-100 font-semibold">Finalists</span> get a{" "}
+              <span className="text-red-300 font-semibold">Finalist Certificate</span>{" "}
+              <span className="text-gray-400">•</span>{" "}
+              <span className="text-gray-100 font-semibold">Winners</span> get a{" "}
+              <span className="text-red-300 font-semibold">Winner Certificate</span>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* ❌ REMOVED FROM HERE: global bottom deadline line */}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Footer */}
       <footer className="bg-slate-950/70 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30">
@@ -800,8 +823,8 @@ export default function HomePage() {
               </div>
 
               <p className="text-gray-300/85 text-sm mt-2 max-w-md">
-                Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through structured
-                problem-solving.
+                Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through
+                structured problem-solving.
               </p>
 
               <div className="mt-3 inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200/90">
