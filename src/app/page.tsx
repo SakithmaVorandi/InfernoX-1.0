@@ -27,44 +27,45 @@ export default function HomePage() {
     []
   );
 
+  // ✅ UPDATED TRACK TOPICS
   const tracks: Track[] = useMemo(
     () => [
       {
-        title: "AI for Social Impact",
-        desc: "Create AI-driven solutions to address social challenges and improve community wellbeing.",
-        badge: "Social",
+        title: "Education & Skill Development",
+        desc: "Build tools and platforms to enhance learning, training, accessibility, and skill development.",
+        badge: "Education",
         border: "border-red-500/30",
         glow: "shadow-red-500/20",
-        icon: "fa-hand-holding-heart",
+        icon: "fa-graduation-cap",
       },
       {
-        title: "AI for Sustainability & Environment",
-        desc: "Design AI technologies for climate action, resource optimization, and eco-friendly solutions.",
-        badge: "Environment",
+        title: "Disaster Management & Resilience",
+        desc: "Create systems for disaster preparedness, early warning, response, and recovery.",
+        badge: "Disaster",
         border: "border-purple-500/30",
         glow: "shadow-purple-500/20",
-        icon: "fa-leaf",
+        icon: "fa-triangle-exclamation",
       },
       {
-        title: "AI for Food & Agriculture",
-        desc: "Develop AI applications to optimize crop yield, improve food security, maximize harvests, and reduce losses.",
-        badge: "Agriculture",
+        title: "Renewable Energy & Energy Efficiency",
+        desc: "Design systems for solar, wind, bioenergy, and efficient energy usage.",
+        badge: "Energy",
         border: "border-red-500/30",
         glow: "shadow-red-500/20",
-        icon: "fa-seedling",
+        icon: "fa-solar-panel",
       },
       {
-        title: "AI for Post-Harvest Management",
+        title: "AI for Post-harvest Management",
         desc: "Predict storage needs and reduce spoilage with AI monitoring systems.",
-        badge: "Post-Harvest",
+        badge: "Post-harvest",
         border: "border-purple-500/30",
         glow: "shadow-purple-500/20",
         icon: "fa-warehouse",
       },
       {
-        title: "Open AI Innovation",
-        desc: "Unleash creativity by developing original AI-powered ideas for any real-world problem.",
-        badge: "Open Innovation",
+        title: "Open Innovation",
+        desc: "Bring any original tech/AI idea that solves a real-world problem — creativity is unlimited.",
+        badge: "Open",
         border: "border-red-500/30",
         glow: "shadow-red-500/20",
         icon: "fa-lightbulb",
@@ -268,7 +269,6 @@ export default function HomePage() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 gap-4">
-
             {/* Left: InfernoX */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -297,14 +297,11 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* Right: Logos (3) */}
+            {/* Right: Logos */}
             <div className="flex items-center gap-2">
-              {/* LNBTI - white plate */}
-              <div className="relative w-14 h-8 rounded-md bg-white/95 border border-white/20 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
+              <div className="relative w-14 h-8 rounded-md border border-white/20 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
                 <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
               </div>
-
-              {/* Robotics Club */}
               <div className="relative w-11 h-8 rounded-md bg-white/5 border border-white/10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
                 <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
               </div>
@@ -318,12 +315,13 @@ export default function HomePage() {
             >
               <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-xl`} />
             </button>
-
           </div>
         </div>
 
-        {/* Mobile Menu (dark glass) */}
-        <div className={`${mobileOpen ? "block animate-slideDown" : "hidden"} md:hidden bg-slate-950/75 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30`}>
+        {/* Mobile Menu */}
+        <div
+          className={`${mobileOpen ? "block animate-slideDown" : "hidden"} md:hidden bg-slate-950/75 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30`}
+        >
           <div className="px-4 pt-4 pb-4 space-y-3">
             {navLinks.map((l) => (
               <button
@@ -448,9 +446,9 @@ export default function HomePage() {
 
               <div className="grid gap-4 mt-8">
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20 glow-box">
-                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we're solving</h3>
+                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we’re solving</h3>
                   <p className="text-gray-300">
-                    Students often build projects without a real problem focus, so ideas don't translate into impact.
+                    Students often build projects without a real problem focus, so ideas don’t translate into impact.
                   </p>
                 </div>
 
@@ -484,13 +482,7 @@ export default function HomePage() {
 
               <div className="relative rounded-3xl overflow-hidden border-2 border-red-500/30 neon-border card-3d">
                 <div className="relative w-full h-96">
-                  <Image
-                    src="/hackathon.png"
-                    alt="Students collaborating during a hackathon"
-                    fill
-                    priority
-                    className="object-cover"
-                  />
+                  <Image src="/hackathon.png" alt="Students collaborating during a hackathon" fill priority className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                 </div>
 
@@ -612,7 +604,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Prizes (NEW) */}
+      {/* Prizes */}
       <section id="prizes" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14 scroll-reveal">
@@ -655,7 +647,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Register (Enhanced) */}
+      {/* Register */}
       <section id="register" className="py-16 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 scroll-reveal">
@@ -668,15 +660,12 @@ export default function HomePage() {
             <p className="text-gray-300 text-base md:text-lg">Secure your spot in the inferno</p>
           </div>
 
-          {/* Outer frame (reduced glow + padding) */}
           <div className="relative scroll-reveal">
             <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500/25 via-orange-500/10 to-purple-500/20 blur-xl" />
             <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-6 md:p-8 overflow-hidden">
-              {/* subtle sweep */}
               <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
 
               <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-                {/* Left - Team Registration */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
@@ -704,7 +693,6 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  {/* Small info row (compact) */}
                   <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                     <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
                       <div className="text-xs font-bold text-red-300 orbitron">2–5</div>
@@ -719,13 +707,12 @@ export default function HomePage() {
                       <div className="text-[11px] text-gray-300">Phases</div>
                     </div>
                   </div>
-                  
+
                   <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
                     <i className="fas fa-lightbulb text-yellow-300/70 mr-1" /> No registration fee
                   </div>
                 </div>
 
-                {/* Middle - Requirements */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
@@ -735,26 +722,21 @@ export default function HomePage() {
                   </div>
 
                   <ul className="grid sm:grid-cols-1 gap-2 text-gray-300 text-sm flex-grow">
-                    {[
-                      "2–5 students (same school)",
-                      "Laptop(s) for the team",
-                      "Basic coding knowledge",
-                      "School ID verification",
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
-                        <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
-                        <span className="text-xs md:text-sm leading-tight">{item}</span>
-                      </li>
-                    ))}
+                    {["2–5 students (same school)", "Laptop(s) for the team", "Basic coding knowledge", "School ID verification"].map(
+                      (item) => (
+                        <li key={item} className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5">
+                          <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
+                          <span className="text-xs md:text-sm leading-tight">{item}</span>
+                        </li>
+                      )
+                    )}
                   </ul>
 
                   <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
-                    <i className="fas fa-plug mr-1 text-red-300/70" /> 
-                    Tip: Bring charger 
+                    <i className="fas fa-plug mr-1 text-red-300/70" /> Tip: Bring charger
                   </div>
                 </div>
 
-                {/* Right - How it works + CTA */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
                   <div className="flex items-start gap-3 mb-3">
                     <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
@@ -762,13 +744,10 @@ export default function HomePage() {
                     </div>
                     <div>
                       <h4 className="text-base md:text-lg font-bold text-purple-300 orbitron mb-1">How it works</h4>
-                      <p className="text-gray-300 text-xs md:text-sm">
-                        Register, choose a track, and submit your proposal.
-                      </p>
+                      <p className="text-gray-300 text-xs md:text-sm">Register, choose a track, and submit your proposal.</p>
                     </div>
                   </div>
 
-                  {/* Compact steps */}
                   <div className="grid gap-2 text-sm flex-grow">
                     {[
                       { n: "1", t: "Register your team" },
@@ -792,31 +771,27 @@ export default function HomePage() {
                     Register Now
                   </Link>
 
-                  {/* Compact certificate note */}
                   <div className="mt-3 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2.5 text-xs text-gray-300">
                     <i className="fas fa-certificate text-red-300 mr-1" />
-                    <span className="text-gray-100 font-semibold">Phase 1 finalists</span> get 
+                    <span className="text-gray-100 font-semibold">Phase 1 finalists</span> get{" "}
                     <span className="text-red-300 font-semibold ml-1">Certificate</span>
                   </div>
                 </div>
               </div>
-              
-              {/* Bottom note - compact */}
+
               <div className="mt-4 text-center text-[11px] text-gray-400 border-t border-white/10 pt-3">
-                <i className="fas fa-clock mr-1 text-purple-300/70" /> 
-                Registration deadline: <span className="text-white font-medium">February 28, 2024</span> • 
-                Don't miss out!
+                <i className="fas fa-clock mr-1 text-purple-300/70" />
+                Registration deadline: <span className="text-white font-medium">February 28, 2024</span> • Don&apos;t miss out!
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer (match DARK glass navbar + reduced height) */}
+      {/* Footer */}
       <footer className="bg-slate-950/70 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30">
         <div className="max-w-6xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            {/* Left */}
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <div className="relative h-8 w-32">
@@ -825,8 +800,8 @@ export default function HomePage() {
               </div>
 
               <p className="text-gray-300/85 text-sm mt-2 max-w-md">
-                Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through
-                structured problem-solving.
+                Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through structured
+                problem-solving.
               </p>
 
               <div className="mt-3 inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200/90">
@@ -834,7 +809,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right */}
             <div className="flex flex-col items-center md:items-end gap-3">
               <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-sm">
                 <button onClick={() => scrollToId("about")} className="text-gray-200/85 hover:text-red-300 transition">
@@ -854,7 +828,6 @@ export default function HomePage() {
                 </button>
               </div>
 
-              {/* Logos */}
               <div className="flex items-center gap-2">
                 <div className="relative w-14 h-8 rounded-md bg-white/95 border border-white/20 overflow-hidden">
                   <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
@@ -867,11 +840,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Bottom bar (short) */}
           <div className="mt-5 pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
-            <p className="text-xs text-gray-400">
-              © {new Date().getFullYear()} InfernoX 1.0. All rights reserved.
-            </p>
+            <p className="text-xs text-gray-400">© {new Date().getFullYear()} InfernoX 1.0. All rights reserved.</p>
 
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-400">Version 1.0.0</span>

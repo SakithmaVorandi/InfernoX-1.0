@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type Member = { name: string; grade: string; email?: string; phone?: string };
+type Errors = Record<string, string>;
 
 export default function RegisterPage() {
   const [teamName, setTeamName] = useState("");
@@ -14,11 +16,12 @@ export default function RegisterPage() {
   const [teamLeadPhone, setTeamLeadPhone] = useState("");
   const [teamLeadEmail, setTeamLeadEmail] = useState("");
 
-  // Optional teacher
+  // ✅ Teacher in-charge (optional, but validate if any field is filled)
   const [teacherName, setTeacherName] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [teacherPhone, setTeacherPhone] = useState("");
 
+  // ✅ UPDATED default to new "Open Innovation"
   const [track, setTrack] = useState("Open Innovation");
   const [ideaSummary, setIdeaSummary] = useState("");
 
@@ -27,16 +30,18 @@ export default function RegisterPage() {
     { name: "", grade: "", email: "", phone: "" },
   ]);
 
+  const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // ✅ UPDATED TRACKS LIST
   const tracks = useMemo(
     () => [
-      "AI for Social Impact",
-      "AI for Sustainability & Environment",
-      "AI for Food & Agriculture",
-      "AI for Post-Harvest Management",
-      "Open AI Innovation",
+      "Education & Skill Development",
+      "Disaster Management & Resilience",
+      "Renewable Energy & Energy Efficiency",
+      "AI for Post-harvest Management",
+      "Open Innovation",
     ],
     []
   );
@@ -55,27 +60,80 @@ export default function RegisterPage() {
     setMembers((prev) => prev.filter((_, idx) => idx !== i));
   };
 
-  const validate = () => {
-    if (!teamName.trim()) return "Team name is required.";
-    if (!schoolName.trim()) return "School name is required.";
-    if (!teamLeadName.trim()) return "Team leader name is required.";
-    if (!teamLeadPhone.trim()) return "Team leader phone is required.";
-    if (!teamLeadEmail.trim()) return "Team leader email is required.";
-    if (!ideaSummary.trim()) return "Idea summary is required.";
+  // ---------- Validation helpers ----------
+  const normalizePhone = (raw: string) => raw.replace(/\s+/g, "");
 
-    for (let i = 0; i < members.length; i++) {
-      const m = members[i];
-      if (!m.name.trim()) return `Member ${i + 1}: name is required.`;
-      if (!m.grade.trim()) return `Member ${i + 1}: grade is required.`;
+  // Accepts local + international: digits with optional leading +
+  // Length: 7–15 digits (common E.164 max 15)
+  const isValidPhone = (raw: string) => {
+    const v = normalizePhone(raw);
+    if (!v) return false;
+    if (!/^\+?\d{7,15}$/.test(v)) return false;
+    return true;
+  };
+
+  const isValidEmail = (raw: string) => {
+    const v = raw.trim();
+    if (!v) return false;
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  };
+
+  const validate = () => {
+    const e: Errors = {};
+
+    // Team
+    if (!teamName.trim()) e.teamName = "Team name is required.";
+    if (!schoolName.trim()) e.schoolName = "School name is required.";
+
+    // Leader
+    if (!teamLeadName.trim()) e.teamLeadName = "Team leader name is required.";
+    if (!teamLeadPhone.trim()) e.teamLeadPhone = "Team leader phone is required.";
+    else if (!isValidPhone(teamLeadPhone)) e.teamLeadPhone = "Enter a valid phone (digits, optional +).";
+    if (!teamLeadEmail.trim()) e.teamLeadEmail = "Team leader email is required.";
+    else if (!isValidEmail(teamLeadEmail)) e.teamLeadEmail = "Enter a valid email.";
+
+    // Track (safety)
+    if (!track.trim()) e.track = "Please select a track.";
+
+    // Idea
+    if (!ideaSummary.trim()) e.ideaSummary = "Idea summary is required.";
+    else if (ideaSummary.trim().length < 30) e.ideaSummary = "Idea summary is too short (write at least ~30 chars).";
+
+    // Teacher in-charge (optional BUT validate if anything entered)
+    const teacherTouched = teacherName.trim() || teacherEmail.trim() || teacherPhone.trim();
+    if (teacherTouched) {
+      if (!teacherName.trim()) e.teacherName = "Teacher name is required if you add teacher details.";
+      if (!teacherEmail.trim()) e.teacherEmail = "Teacher email is required if you add teacher details.";
+      else if (!isValidEmail(teacherEmail)) e.teacherEmail = "Enter a valid teacher email.";
+
+      if (!teacherPhone.trim()) e.teacherPhone = "Teacher phone is required if you add teacher details.";
+      else if (!isValidPhone(teacherPhone)) e.teacherPhone = "Enter a valid teacher phone (digits, optional +).";
     }
 
-    return null;
+    // Members: name + grade + ✅ student phone required
+    for (let i = 0; i < members.length; i++) {
+      const m = members[i];
+      const idx = i + 1;
+
+      if (!m.name?.trim()) e[`m_${i}_name`] = `Member ${idx}: name is required.`;
+      if (!m.grade?.trim()) e[`m_${i}_grade`] = `Member ${idx}: grade is required.`;
+
+      const phone = (m.phone || "").trim();
+      if (!phone) e[`m_${i}_phone`] = `Member ${idx}: phone number is required.`;
+      else if (!isValidPhone(phone)) e[`m_${i}_phone`] = `Member ${idx}: enter a valid phone (digits, optional +).`;
+
+      const email = (m.email || "").trim();
+      if (email && !isValidEmail(email)) e[`m_${i}_email`] = `Member ${idx}: enter a valid email or leave it blank.`;
+    }
+
+    setErrors(e);
+    return Object.keys(e).length ? e : null;
   };
 
   const submit = async () => {
-    const err = validate();
-    if (err) {
-      setStatus(`❌ ${err}`);
+    const e = validate();
+    if (e) {
+      setStatus("❌ Please fix the highlighted fields and try again.");
       return;
     }
 
@@ -87,26 +145,31 @@ export default function RegisterPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          team_name: teamName,
-          school_name: schoolName,
-          team_lead_name: teamLeadName,
-          team_lead_phone: teamLeadPhone,
-          team_lead_email: teamLeadEmail,
-          teacher_name: teacherName,
-          teacher_email: teacherEmail,
-          teacher_phone: teacherPhone,
+          team_name: teamName.trim(),
+          school_name: schoolName.trim(),
+          team_lead_name: teamLeadName.trim(),
+          team_lead_phone: normalizePhone(teamLeadPhone.trim()),
+          team_lead_email: teamLeadEmail.trim(),
+          teacher_name: teacherName.trim(),
+          teacher_email: teacherEmail.trim(),
+          teacher_phone: teacherPhone ? normalizePhone(teacherPhone.trim()) : "",
           track,
-          idea_summary: ideaSummary,
-          members,
+          idea_summary: ideaSummary.trim(),
+          members: members.map((m) => ({
+            ...m,
+            name: m.name.trim(),
+            grade: m.grade.trim(),
+            email: (m.email || "").trim(),
+            phone: normalizePhone((m.phone || "").trim()),
+          })),
         }),
       });
 
       const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data?.ok) {
-        throw new Error(data?.error || "Submission failed");
-      }
+      if (!res.ok || !data?.ok) throw new Error(data?.error || "Submission failed");
 
       setStatus("✅ Registered successfully! We will contact you soon.");
+      setErrors({});
 
       // reset
       setTeamName("");
@@ -123,32 +186,57 @@ export default function RegisterPage() {
         { name: "", grade: "", email: "", phone: "" },
         { name: "", grade: "", email: "", phone: "" },
       ]);
-    } catch (e: any) {
-      setStatus(`❌ ${e?.message || "Something went wrong. Please try again."}`);
+    } catch (err: any) {
+      setStatus(`❌ ${err?.message || "Something went wrong. Please try again."}`);
     } finally {
       setLoading(false);
     }
   };
 
+  const fieldClass = (key: string, accent: "red" | "purple" = "red") => {
+    const has = !!errors[key];
+    const base = "w-full p-3 rounded-xl bg-black/30 outline-none transition border";
+    const ok =
+      accent === "red"
+        ? "border-red-500/20 focus:border-red-400/60"
+        : "border-purple-500/20 focus:border-purple-400/60";
+    const bad = "border-red-400/70 ring-1 ring-red-400/25";
+    return `${base} ${has ? bad : ok}`;
+  };
+
+  const errorText = (key: string) =>
+    errors[key] ? <p className="mt-1 text-xs text-red-200">{errors[key]}</p> : null;
+
   return (
     <div className="min-h-screen text-white bg-gradient-to-b from-black via-[#0a0008] to-black">
-      {/* Top nav (simple) */}
+      {/* Top nav (logo + partner logos) */}
       <div className="fixed top-0 inset-x-0 z-40 bg-gray-900/70 backdrop-blur-lg border-b border-red-500/20">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="font-black tracking-wide">
-              <span className="text-red-400">Inferno</span>
-              <span className="text-purple-400">X</span>
-            </span>
-            <span className="text-xs text-gray-400">Registration</span>
+          <Link href="/" className="flex items-center gap-3">
+            {/* ✅ Logo image */}
+            <div className="relative h-8 w-40 sm:h-9 sm:w-44">
+              <Image src="/infernox-logo.png" alt="InfernoX 1.0" fill priority className="object-contain" />
+            </div>
+            {/*<span className="text-xs text-gray-400 hidden sm:inline">Registration</span>*/}
           </Link>
 
-          <Link
-            href="/"
-            className="text-sm px-4 py-2 rounded-full border border-purple-500/30 hover:border-purple-400/60 hover:bg-purple-500/10 transition"
-          >
-            ← Back to Home
-          </Link>
+          {/* ✅ Partner logos */}
+          <div className="flex items-center gap-2">
+            <div className="relative w-20 h-9 rounded-md bg-white/5 border border-white/10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
+              <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
+            </div>
+
+            <div className="relative w-12 h-9 rounded-md bg-white/5 border border-white/10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
+              <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
+            </div>
+
+            {/*<Link
+              href="/"
+              className="text-sm px-4 py-2 rounded-full border border-purple-500/30 hover:border-purple-400/60 hover:bg-purple-500/10 transition hidden sm:inline-flex"
+            >
+              ← Back to Home
+            </Link>*/}
+          </div>
         </div>
       </div>
 
@@ -166,7 +254,7 @@ export default function RegisterPage() {
               <span className="text-purple-400">purpose</span>.
             </h1>
             <p className="text-gray-300 mt-3">
-              Fill in team details, team leader contact, and each member’s grade. (2–5 members)
+              Fill in team details, team leader contact, and each member’s grade + phone. (2–5 members)
             </p>
           </div>
 
@@ -197,18 +285,25 @@ export default function RegisterPage() {
                     Team <span className="text-red-400">Details</span>
                   </h2>
                   <div className="grid md:grid-cols-2 gap-3">
-                    <input
-                      className="p-3 rounded-xl bg-black/30 border border-red-500/20 focus:border-red-400/60 outline-none transition"
-                      placeholder="Team Name *"
-                      value={teamName}
-                      onChange={(e) => setTeamName(e.target.value)}
-                    />
-                    <input
-                      className="p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
-                      placeholder="School Name *"
-                      value={schoolName}
-                      onChange={(e) => setSchoolName(e.target.value)}
-                    />
+                    <div>
+                      <input
+                        className={fieldClass("teamName", "red")}
+                        placeholder="Team Name *"
+                        value={teamName}
+                        onChange={(e) => setTeamName(e.target.value)}
+                      />
+                      {errorText("teamName")}
+                    </div>
+
+                    <div>
+                      <input
+                        className={fieldClass("schoolName", "purple")}
+                        placeholder="School Name *"
+                        value={schoolName}
+                        onChange={(e) => setSchoolName(e.target.value)}
+                      />
+                      {errorText("schoolName")}
+                    </div>
                   </div>
                 </section>
 
@@ -217,55 +312,79 @@ export default function RegisterPage() {
                   <h2 className="text-xl font-bold mb-3">
                     Team Leader <span className="text-red-400">(Required)</span>
                   </h2>
+
                   <div className="grid md:grid-cols-3 gap-3">
-                    <input
-                      className="p-3 rounded-xl bg-black/30 border border-red-500/20 focus:border-red-400/60 outline-none transition"
-                      placeholder="Leader Name *"
-                      value={teamLeadName}
-                      onChange={(e) => setTeamLeadName(e.target.value)}
-                    />
-                    <input
-                      className="p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
-                      placeholder="Leader Phone *"
-                      value={teamLeadPhone}
-                      onChange={(e) => setTeamLeadPhone(e.target.value)}
-                    />
-                    <input
-                      className="p-3 rounded-xl bg-black/30 border border-red-500/20 focus:border-red-400/60 outline-none transition"
-                      placeholder="Leader Email *"
-                      value={teamLeadEmail}
-                      onChange={(e) => setTeamLeadEmail(e.target.value)}
-                    />
+                    <div>
+                      <input
+                        className={fieldClass("teamLeadName", "red")}
+                        placeholder="Leader Name *"
+                        value={teamLeadName}
+                        onChange={(e) => setTeamLeadName(e.target.value)}
+                      />
+                      {errorText("teamLeadName")}
+                    </div>
+
+                    <div>
+                      <input
+                        className={fieldClass("teamLeadPhone", "purple")}
+                        placeholder="Leader Phone * (e.g. +947XXXXXXXX)"
+                        value={teamLeadPhone}
+                        onChange={(e) => setTeamLeadPhone(e.target.value)}
+                      />
+                      {errorText("teamLeadPhone")}
+                    </div>
+
+                    <div>
+                      <input
+                        className={fieldClass("teamLeadEmail", "red")}
+                        placeholder="Leader Email *"
+                        value={teamLeadEmail}
+                        onChange={(e) => setTeamLeadEmail(e.target.value)}
+                      />
+                      {errorText("teamLeadEmail")}
+                    </div>
                   </div>
 
-                  {/* Optional teacher */}
+                  {/* Teacher In-charge */}
                   <div className="mt-5 rounded-2xl border border-purple-500/20 bg-purple-500/5 p-4">
                     <div className="flex items-start gap-3">
                       <div className="mt-1 w-2.5 h-2.5 rounded-full bg-purple-400 shadow-[0_0_18px_rgba(192,132,252,0.7)]" />
                       <div className="flex-1">
                         <h3 className="font-semibold text-purple-200">Teacher In-charge (Optional)</h3>
                         <p className="text-sm text-gray-300 mt-1">
-                          If a teacher is coordinating, add details below.
+                          If you add any teacher field, all teacher details will be validated.
                         </p>
+
                         <div className="grid md:grid-cols-3 gap-3 mt-3">
-                          <input
-                            className="p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
-                            placeholder="Teacher Name"
-                            value={teacherName}
-                            onChange={(e) => setTeacherName(e.target.value)}
-                          />
-                          <input
-                            className="p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
-                            placeholder="Teacher Email"
-                            value={teacherEmail}
-                            onChange={(e) => setTeacherEmail(e.target.value)}
-                          />
-                          <input
-                            className="p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
-                            placeholder="Teacher Phone"
-                            value={teacherPhone}
-                            onChange={(e) => setTeacherPhone(e.target.value)}
-                          />
+                          <div>
+                            <input
+                              className={fieldClass("teacherName", "purple")}
+                              placeholder="Teacher Name"
+                              value={teacherName}
+                              onChange={(e) => setTeacherName(e.target.value)}
+                            />
+                            {errorText("teacherName")}
+                          </div>
+
+                          <div>
+                            <input
+                              className={fieldClass("teacherEmail", "purple")}
+                              placeholder="Teacher Email"
+                              value={teacherEmail}
+                              onChange={(e) => setTeacherEmail(e.target.value)}
+                            />
+                            {errorText("teacherEmail")}
+                          </div>
+
+                          <div>
+                            <input
+                              className={fieldClass("teacherPhone", "purple")}
+                              placeholder="Teacher Phone"
+                              value={teacherPhone}
+                              onChange={(e) => setTeacherPhone(e.target.value)}
+                            />
+                            {errorText("teacherPhone")}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -277,8 +396,11 @@ export default function RegisterPage() {
                   <h2 className="text-xl font-bold mb-3">
                     Choose a <span className="text-purple-400">Track</span>
                   </h2>
+
                   <select
-                    className="w-full p-3 rounded-xl bg-black/30 border border-purple-500/20 focus:border-purple-400/60 outline-none transition"
+                    className={`w-full p-3 rounded-xl bg-black/30 outline-none transition border ${
+                      errors.track ? "border-red-400/70 ring-1 ring-red-400/25" : "border-purple-500/20 focus:border-purple-400/60"
+                    }`}
                     value={track}
                     onChange={(e) => setTrack(e.target.value)}
                   >
@@ -288,6 +410,7 @@ export default function RegisterPage() {
                       </option>
                     ))}
                   </select>
+                  {errorText("track")}
                 </section>
 
                 {/* Idea */}
@@ -296,27 +419,14 @@ export default function RegisterPage() {
                     Idea <span className="text-red-400">Summary</span>
                   </h2>
 
-                  {/* ✅ replace arrows with pill steps (no color change) */}
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span className="px-3 py-1.5 rounded-full text-xs border border-red-500/30 bg-red-500/10 text-red-200">
-                      Problem
-                    </span>
-                    <span className="text-gray-500">•</span>
-                    <span className="px-3 py-1.5 rounded-full text-xs border border-purple-500/30 bg-purple-500/10 text-purple-200">
-                      Proposal
-                    </span>
-                    <span className="text-gray-500">•</span>
-                    <span className="px-3 py-1.5 rounded-full text-xs border border-red-500/30 bg-red-500/10 text-red-200">
-                      | Final Demo
-                    </span>
-                  </div>
-
                   <textarea
-                    className="w-full p-3 rounded-xl bg-black/30 border border-red-500/20 focus:border-red-400/60 outline-none transition min-h-[160px]"
+                    className={fieldClass("ideaSummary", "red") + " min-h-[160px]"}
                     placeholder="Idea Summary * (100–200 words recommended)"
                     value={ideaSummary}
                     onChange={(e) => setIdeaSummary(e.target.value)}
                   />
+                  {errorText("ideaSummary")}
+
                   <p className="text-xs text-gray-400 mt-2">
                     Tip: mention the problem, who it affects, and what your solution does.
                   </p>
@@ -329,7 +439,10 @@ export default function RegisterPage() {
                       <h2 className="text-xl font-bold">
                         Team <span className="text-purple-400">Members</span>
                       </h2>
-                      <p className="text-sm text-gray-300">2–5 members. Name & grade required.</p>
+                      <p className="text-sm text-gray-300">
+                        2–5 members. Name, grade, and{" "}
+                        <span className="text-purple-200 font-semibold">student phone</span> required.
+                      </p>
                     </div>
 
                     <button
@@ -363,30 +476,45 @@ export default function RegisterPage() {
                         </div>
 
                         <div className="grid md:grid-cols-4 gap-2">
-                          <input
-                            className="p-2.5 rounded-xl bg-black/35 border border-red-500/15 focus:border-red-400/60 outline-none transition"
-                            placeholder="Name *"
-                            value={m.name}
-                            onChange={(e) => updateMember(i, "name", e.target.value)}
-                          />
-                          <input
-                            className="p-2.5 rounded-xl bg-black/35 border border-purple-500/15 focus:border-purple-400/60 outline-none transition"
-                            placeholder="Grade *"
-                            value={m.grade}
-                            onChange={(e) => updateMember(i, "grade", e.target.value)}
-                          />
-                          <input
-                            className="p-2.5 rounded-xl bg-black/35 border border-red-500/15 focus:border-red-400/60 outline-none transition"
-                            placeholder="Email (optional)"
-                            value={m.email || ""}
-                            onChange={(e) => updateMember(i, "email", e.target.value)}
-                          />
-                          <input
-                            className="p-2.5 rounded-xl bg-black/35 border border-purple-500/15 focus:border-purple-400/60 outline-none transition"
-                            placeholder="Phone (optional)"
-                            value={m.phone || ""}
-                            onChange={(e) => updateMember(i, "phone", e.target.value)}
-                          />
+                          <div>
+                            <input
+                              className={fieldClass(`m_${i}_name`, "red")}
+                              placeholder="Name *"
+                              value={m.name}
+                              onChange={(e) => updateMember(i, "name", e.target.value)}
+                            />
+                            {errorText(`m_${i}_name`)}
+                          </div>
+
+                          <div>
+                            <input
+                              className={fieldClass(`m_${i}_grade`, "purple")}
+                              placeholder="Grade *"
+                              value={m.grade}
+                              onChange={(e) => updateMember(i, "grade", e.target.value)}
+                            />
+                            {errorText(`m_${i}_grade`)}
+                          </div>
+
+                          <div>
+                            <input
+                              className={fieldClass(`m_${i}_email`, "red")}
+                              placeholder="Email (optional)"
+                              value={m.email || ""}
+                              onChange={(e) => updateMember(i, "email", e.target.value)}
+                            />
+                            {errorText(`m_${i}_email`)}
+                          </div>
+
+                          <div>
+                            <input
+                              className={fieldClass(`m_${i}_phone`, "purple")}
+                              placeholder="Phone *"
+                              value={m.phone || ""}
+                              onChange={(e) => updateMember(i, "phone", e.target.value)}
+                            />
+                            {errorText(`m_${i}_phone`)}
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -427,16 +555,13 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Footer (simple, red/purple palette) */}
+          {/* Footer */}
           <footer className="mt-10 text-center text-sm text-gray-400">
             <div className="h-px w-full bg-gradient-to-r from-transparent via-red-500/30 to-transparent mb-6" />
             <p>
-              © 2025 <span className="text-red-300">Inferno</span>
+              © {new Date().getFullYear()}{" "}
+              <span className="text-red-300">Inferno</span>
               <span className="text-purple-300">X</span> 1.0 · Robotics Club of LNBTI
-            </p>
-            <p className="mt-1">
-              Need help?{" "}
-              <span className="text-purple-300/90">Contact the team leader support channel</span>.
             </p>
           </footer>
         </div>
