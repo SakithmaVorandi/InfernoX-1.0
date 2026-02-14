@@ -482,7 +482,7 @@ export default function HomePage() {
               <div className="relative rounded-3xl overflow-hidden border-2 border-red-500/30 neon-border card-3d">
                 <div className="relative w-full h-96">
                   <Image
-                    src="/hackathon.png"
+                    src="/hackathon.jpg"
                     alt="Students collaborating during a hackathon"
                     fill
                     priority
