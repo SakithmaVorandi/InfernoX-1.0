@@ -24,6 +24,16 @@ type Prize = {
   perks?: string[];
 };
 
+type TimelineItem = {
+  icon: string;
+  color: string;
+  title: string;
+  time: string;
+  text: string;
+  border: string;
+  titleColor: string;
+};
+
 export default function HomePage() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -38,7 +48,6 @@ export default function HomePage() {
     []
   );
 
-  // ✅ UPDATED TRACK TOPICS
   const tracks: Track[] = useMemo(
     () => [
       {
@@ -85,7 +94,7 @@ export default function HomePage() {
     []
   );
 
-  const timeline = useMemo(
+  const timeline: TimelineItem[] = useMemo(
     () => [
       {
         icon: "1",
@@ -100,44 +109,44 @@ export default function HomePage() {
         icon: "2",
         color: "from-purple-500 to-pink-600",
         title: "Registrations",
-        time: "Feb 12 – Feb 28",
-        text: "Teams register and confirm participation before the deadline.",
+        time: "Extended till Mar 24",
+        text: "Registrations have been extended till March 24th. Teams must register and confirm participation before the final deadline.",
         border: "border-purple-500/30",
         titleColor: "text-purple-400",
       },
       {
         icon: "3",
-        color: "from-green-500 to-teal-600",
-        title: "Proposal Submission",
-        time: "Feb 8 – Mar 10",
-        text: "Teams submit a clear problem statement and a proposed solution plan.",
-        border: "border-green-500/30",
-        titleColor: "text-green-400",
-      },
-      {
-        icon: "4",
-        color: "from-orange-500 to-red-600",
-        title: "Proposal Review & Shortlisting",
-        time: "Mar 10 – Mar 22",
-        text: "Proposals are reviewed and shortlisted for the presentations.",
-        border: "border-orange-500/30",
-        titleColor: "text-orange-400",
-      },
-      {
-        icon: "I",
         color: "from-blue-500 to-cyan-600",
-        title: "Phase I (Final) — Proposal Presentation",
-        time: "Mar 31",
-        text: "Shortlisted teams present their proposal to the panel.",
+        title: "Introduction Session (Online)",
+        time: "Mar 25",
+        text: "All registered students must participate in the first Introduction Session.",
         border: "border-blue-500/30",
         titleColor: "text-blue-400",
       },
       {
+        icon: "4",
+        color: "from-green-500 to-teal-600",
+        title: "Proposal Submission Deadline",
+        time: "Apr 7",
+        text: "Teams must submit their proposal presentation together with a 15-minute proposal explanation recording before the deadline.",
+        border: "border-green-500/30",
+        titleColor: "text-green-400",
+      },
+      {
+        icon: "5",
+        color: "from-orange-500 to-red-600",
+        title: "Announcement of First Round Winners",
+        time: "Apr 10",
+        text: "The first round winners will be officially announced after the proposal evaluation process is completed.",
+        border: "border-orange-500/30",
+        titleColor: "text-orange-400",
+      },
+      {
         icon: "II",
         color: "from-yellow-500 to-orange-600",
-        title: "Phase II (Final Day) — Project Demonstration",
+        title: "Final Event / Project Demonstration",
         time: "Expected: May 30 – Jun 5",
-        text: "Finalists demo a working solution and compete for awards.",
+        text: "Finalists will demonstrate their working solutions and compete for awards during the final event.",
         border: "border-yellow-500/30",
         titleColor: "text-yellow-400",
       },
@@ -145,7 +154,6 @@ export default function HomePage() {
     []
   );
 
-  // ✅ UPDATED + ENHANCED PRIZES
   const prizes: Prize[] = useMemo(
     () => [
       {
@@ -192,7 +200,6 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    // Loading bar simulation
     const loadingBar = document.getElementById("loadingBar") as HTMLDivElement | null;
     if (loadingBar) {
       let progress = 0;
@@ -208,7 +215,6 @@ export default function HomePage() {
       }, 80);
     }
 
-    // Navbar shadow on scroll (NO hiding)
     const nav = document.querySelector("nav") as HTMLElement | null;
 
     const updateNavbar = () => {
@@ -224,7 +230,6 @@ export default function HomePage() {
     updateNavbar();
     window.addEventListener("scroll", updateNavbar, { passive: true });
 
-    // Scroll reveal
     const revealEls = document.querySelectorAll(".scroll-reveal");
     const revealObs = new IntersectionObserver(
       (entries) => {
@@ -236,7 +241,6 @@ export default function HomePage() {
     );
     revealEls.forEach((el) => revealObs.observe(el));
 
-    // Flame particles
     const flamesContainer = document.getElementById("flames-container");
     if (flamesContainer) {
       flamesContainer.innerHTML = "";
@@ -252,7 +256,6 @@ export default function HomePage() {
       }
     }
 
-    // Timeline slide in
     const timelineItems = document.querySelectorAll("#timeline .timeline-item");
     const timelineObs = new IntersectionObserver(
       (entries) => {
@@ -280,7 +283,6 @@ export default function HomePage() {
       <nav className="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 gap-4">
-            {/* Left: InfernoX */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="flex items-center gap-3 group"
@@ -291,7 +293,6 @@ export default function HomePage() {
               </div>
             </button>
 
-            {/* Center: Links */}
             <div className="hidden md:flex space-x-8">
               {navLinks.map((l) => (
                 <button
@@ -308,17 +309,15 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* Right: Logos */}
             <div className="flex items-center gap-2">
               <div className="relative w-19 h-10 shadow-sm shadow-black/30 overflow-hidden flex items-center justify-center">
                 <Image src="/lnbtilogo.png" alt="LNBTI" fill className="object-contain p-1" />
               </div>
-              <div className="relative w-13 h-10  shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
+              <div className="relative w-13 h-10 shadow-sm shadow-black/20 overflow-hidden flex items-center justify-center">
                 <Image src="/roboticsclub.png" alt="Robotics Club" fill className="object-contain p-1" />
               </div>
             </div>
 
-            {/* Mobile */}
             <button
               onClick={() => setMobileOpen((s) => !s)}
               className="md:hidden text-red-300 hover:text-orange-300 transition-colors"
@@ -329,7 +328,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <div
           className={`${
             mobileOpen ? "block animate-slideDown" : "hidden"
@@ -378,6 +376,11 @@ export default function HomePage() {
             </div>
           </div>
 
+          <div className="mb-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/10 px-5 py-2 text-sm text-orange-200">
+            <i className="fas fa-bullhorn text-orange-300" />
+            Registrations extended till March 24th
+          </div>
+
           <h1 className="text-7xl md:text-9xl font-black mb-8 orbitron">
             <span className="text-gradient-animated fire-text">InfernoX</span>
             <span className="text-white drop-shadow-2xl"> 1.0</span>
@@ -396,14 +399,14 @@ export default function HomePage() {
           <div className="flex flex-wrap justify-center gap-6 mb-12 text-lg">
             <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-red-500/30 glow-box floating">
               <i className="fas fa-calendar-alt text-red-400" />
-              <span>Finals: May 30 – Jun 5</span>
+              <span>Registration Deadline: March 24</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-500/30 glow-box floating"
               style={{ animationDelay: "0.5s" }}
             >
-              <i className="fas fa-clock text-purple-400" />
-              <span>Multi-Phase Event</span>
+              <i className="fas fa-video text-purple-400" />
+              <span>Introduction Session: March 25</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/30 glow-box floating"
@@ -426,12 +429,12 @@ export default function HomePage() {
             </button>
 
             <button
-              onClick={() => scrollToId("about")}
+              onClick={() => scrollToId("timeline")}
               className="border-2 border-red-400 px-10 py-4 rounded-full font-bold text-lg hover:bg-red-400/10 transition-all duration-300 relative overflow-hidden group btn-inferno"
             >
               <span className="relative z-10">
-                <i className="fas fa-fire mr-2" />
-                Learn More
+                <i className="fas fa-calendar-days mr-2" />
+                View Important Dates
               </span>
             </button>
           </div>
@@ -468,8 +471,8 @@ export default function HomePage() {
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 glow-box">
                   <h3 className="text-xl font-bold orbitron text-purple-400 mb-2">Our solution</h3>
                   <p className="text-gray-300">
-                    A structured, multi-phase hackathon: register • submit a proposal • get shortlisted • present • build
-                    and demo a working solution.
+                    A structured hackathon experience: register, attend the introduction session, submit a proposal with a
+                    recording, get shortlisted, and move toward the next round.
                   </p>
                 </div>
               </div>
@@ -480,8 +483,8 @@ export default function HomePage() {
                   <div className="text-gray-200 text-sm">Teams</div>
                 </div>
                 <div className="text-center bg-purple-500/20 backdrop-blur-md p-4 rounded-xl border border-purple-500/30 glow-box">
-                  <div className="text-3xl font-bold text-purple-400 mb-1 orbitron">2</div>
-                  <div className="text-gray-200 text-sm">Phases</div>
+                  <div className="text-3xl font-bold text-purple-400 mb-1 orbitron">4</div>
+                  <div className="text-gray-200 text-sm">Key Dates</div>
                 </div>
                 <div className="text-center bg-red-500/10 backdrop-blur-md p-4 rounded-xl border border-red-500/30 glow-box">
                   <div className="text-3xl font-bold text-red-300 mb-1 orbitron">5</div>
@@ -509,19 +512,19 @@ export default function HomePage() {
                   <h3 className="text-2xl font-bold text-red-400 mb-3 orbitron">Build with Purpose</h3>
                   <div className="flex flex-wrap items-center gap-2 text-sm">
                     <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
-                      Problem
+                      Register
                     </span>
                     <span className="text-purple-300/90">•</span>
                     <span className="px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-gray-100">
-                      Proposal
+                      Session
                     </span>
                     <span className="text-purple-300/90">•</span>
                     <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/30 text-gray-100">
-                      Demo
+                      Proposal
                     </span>
                   </div>
 
-                  <p className="text-gray-200/80 text-sm mt-3">Collaborate, iterate, and ship something real—together.</p>
+                  <p className="text-gray-200/80 text-sm mt-3">Collaborate, iterate, and pitch something meaningful.</p>
                 </div>
               </div>
             </div>
@@ -537,9 +540,11 @@ export default function HomePage() {
               Choose Your Battlefield
             </span>
             <h2 className="text-5xl font-bold mt-4 mb-4 orbitron">
-              Competetive <span className="text-gradient-animated">Tracks</span>
+              Competitive <span className="text-gradient-animated">Tracks</span>
             </h2>
-            <p className="text-gray-300 text-lg max-w-3xl mx-auto">Pick one track and build an AI solution with real-world value.</p>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+              Pick one track and build an AI solution with real-world value.
+            </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6">
@@ -578,16 +583,16 @@ export default function HomePage() {
 
       {/* Timeline */}
       <section id="timeline" className="py-24 px-4 hero-gradient relative flame-bg">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 scroll-reveal">
-            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Official Schedule</span>
+            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
+              Official Schedule
+            </span>
             <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
-              Event <span className="text-gradient-animated">Timeline</span>
+              Important Dates & <span className="text-gradient-animated">Information</span>
             </h2>
             <p className="text-gray-300 text-xl">
-              From <span className="text-red-400 font-semibold">launch</span> •{" "}
-              <span className="text-purple-400 font-semibold">proposal</span> •{" "}
-              <span className="text-red-300 font-semibold">finals</span>
+              Launch • Registration • Introduction Session • Proposal • First Round • Finals
             </p>
           </div>
 
@@ -616,18 +621,60 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          {/* Important Notice */}
+          <div className="mt-12 scroll-reveal">
+            <div className="mx-auto max-w-4xl rounded-3xl border border-orange-400/25 bg-gradient-to-r from-orange-500/10 via-red-500/10 to-purple-500/10 backdrop-blur-sm p-5 md:p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400/20 to-red-500/20 border border-orange-300/20 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-circle-info text-orange-300 text-lg" />
+                </div>
+
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <span className="inline-flex items-center rounded-full border border-orange-300/20 bg-orange-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-orange-200 orbitron">
+                      Must Read
+                    </span>
+                    <h3 className="text-2xl font-bold orbitron text-orange-300 leading-tight">
+                      Important Notice
+                    </h3>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <p className="text-gray-100 leading-relaxed">
+                        All registered students must participate in the first{" "}
+                        <span className="text-white font-semibold">Introduction Session</span>.
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <p className="text-gray-300 leading-relaxed">
+                        Further information, including{" "}
+                        <span className="text-orange-200 font-medium">submission links</span>,{" "}
+                        <span className="text-orange-200 font-medium">guidelines</span>,{" "}
+                        <span className="text-orange-200 font-medium">additional instructions</span>, and{" "}
+                        <span className="text-orange-200 font-medium">sample materials</span> will be provided during the
+                        Introduction Session.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ✅ ENHANCED Prizes Section (compact — won’t exceed) */}
+      {/* Prizes */}
       <section id="prizes" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 scroll-reveal">
+          <div className="text-center mb-5 scroll-reveal">
             <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Awards</span>
-            <h2 className="text-5xl font-bold mt-4 mb-2 orbitron">
+            <h2 className="text-5xl font-bold mt-4 mb-1 orbitron">
               Prizes & <span className="text-gradient-animated">Recognition</span>
             </h2>
-            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
               All <span className="text-purple-300 font-semibold">Finalists</span> will receive a{" "}
               <span className="text-red-300 font-semibold">Finalist Certificate</span>. All{" "}
               <span className="text-orange-300 font-semibold">Winners</span> will receive a{" "}
@@ -635,7 +682,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Top strip (kept compact) */}
           <div className="mb-2 scroll-reveal">
             <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-gradient-to-r from-red-500/10 via-purple-500/10 to-orange-500/10 px-5 py-3 backdrop-blur-sm">
               <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-200/90">
@@ -657,7 +703,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {prizes.map((p) => (
               <div
@@ -666,20 +711,11 @@ export default function HomePage() {
                   p.border
                 } glow-box card-3d overflow-hidden ${p.highlight ? "ring-1 ring-yellow-400/25" : ""}`}
               >
-                {/* Grand badge 
-                {p.highlight && (
-                  <div className="absolute top-4 right-4 text-[10px] uppercase tracking-widest px-3 py-1 rounded-full bg-yellow-500/15 border border-yellow-400/30 text-yellow-200">
-                    GRAND
-                  </div>
-                )}*/}
-
-                {/* Soft gradient wash */}
                 <div
                   className={`pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${p.color}`}
                 />
 
                 <div className="flex items-start justify-between gap-5">
-                  {/* Left */}
                   <div className="min-w-0">
                     <div
                       className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center text-2xl shadow-lg shadow-black/25`}
@@ -691,7 +727,6 @@ export default function HomePage() {
                     <p className="text-gray-300 mt-1 text-sm">{p.subtitle}</p>
                   </div>
 
-                  {/* Right (two-line amount like your screenshot) */}
                   <div className="text-right flex-shrink-0">
                     <div className="text-[11px] text-gray-400 uppercase tracking-widest">Cash Prize</div>
                     <div className="mt-2 leading-none">
@@ -701,7 +736,6 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Perks (kept compact so it won’t exceed) */}
                 {p.perks?.length ? (
                   <div className="mt-5 grid gap-2">
                     {p.perks.map((perk) => (
@@ -716,7 +750,6 @@ export default function HomePage() {
                   </div>
                 ) : null}
 
-                {/* Bottom chips */}
                 <div className="mt-5 flex flex-wrap items-center gap-2">
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-red-500/20 text-gray-200">
                     Winner Certificate
@@ -729,7 +762,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-10 text-center scroll-reveal">
+          <div className="mt-6 text-center scroll-reveal">
             <button
               onClick={() => scrollToId("register")}
               className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-red-500/30 bg-red-500/10 hover:bg-red-500/15 transition"
@@ -742,25 +775,34 @@ export default function HomePage() {
       </section>
 
       {/* Register */}
-      <section id="register" className="py-16 px-4 hero-gradient relative flame-bg">
+      <section id="register" className="py-12 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 scroll-reveal">
+          <div className="text-center mb-6 scroll-reveal">
             <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Join the Battle</span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-3 mb-3 orbitron">
+            <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-2 orbitron">
               Register Your <span className="text-gradient-animated">Team</span>
             </h2>
-            <p className="text-gray-300 text-base md:text-lg">Secure your spot in the inferno</p>
+            <p className="text-gray-300 text-base md:text-lg">Registrations extended till March 24th</p>
+          </div>
+
+          <div className="mb-4 scroll-reveal">
+            <div className="mx-auto max-w-4xl rounded-2xl border border-orange-400/25 bg-orange-500/10 px-5 py-3 text-center backdrop-blur-sm">
+              <p className="text-orange-200 font-medium">
+                <i className="fas fa-bullhorn mr-2 text-orange-300" />
+                Registration deadline has been extended to <span className="text-white font-bold">24th March</span>.
+              </p>
+            </div>
           </div>
 
           <div className="relative scroll-reveal">
             <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500/25 via-orange-500/10 to-purple-500/20 blur-xl" />
-            <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-6 md:p-8 overflow-hidden">
+            <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-5 md:p-6 overflow-hidden">
               <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
 
-              <div className="grid lg:grid-cols-3 gap-6 items-stretch">
-                {/* Column 1: Team Registration */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-start gap-4">
+              <div className="grid lg:grid-cols-3 gap-4 items-stretch">
+                {/* Column 1 */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                  <div className="flex items-start gap-3">
                     <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
                       <i className="fas fa-fire" />
                     </div>
@@ -774,7 +816,7 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-3 flex flex-wrap gap-2">
                     <span className="px-3 py-1 rounded-full bg-red-500/15 border border-red-500/25 text-gray-100 text-xs">
                       FREE
                     </span>
@@ -782,11 +824,11 @@ export default function HomePage() {
                       Limited Spots
                     </span>
                     <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200 text-xs">
-                      Deadline: Feb 28
+                      Deadline: March 24
                     </span>
                   </div>
 
-                  <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                  <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                     <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
                       <div className="text-xs font-bold text-red-300 orbitron">2–5</div>
                       <div className="text-[11px] text-gray-300">Members</div>
@@ -796,14 +838,14 @@ export default function HomePage() {
                       <div className="text-[11px] text-gray-300">Tracks</div>
                     </div>
                     <div className="rounded-xl bg-black/20 border border-white/10 py-2 px-1">
-                      <div className="text-xs font-bold text-orange-300 orbitron">2</div>
-                      <div className="text-[11px] text-gray-300">Phases</div>
+                      <div className="text-xs font-bold text-orange-300 orbitron">1</div>
+                      <div className="text-[11px] text-gray-300">Intro Session</div>
                     </div>
                   </div>
 
-                  <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
+                  <div className="mt-2 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
                     <i className="fas fa-clock mr-1 text-purple-300/70" />
-                    Registration deadline: <span className="text-white font-medium">February 28, 2024</span> • Don&apos;t miss out!
+                    Registration deadline: <span className="text-white font-medium">24th March</span> • Extended deadline
                   </div>
 
                   <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
@@ -811,9 +853,9 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Column 2: Requirements */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-center gap-3 mb-3">
+                {/* Column 2 */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                  <div className="flex items-center gap-3 mb-2">
                     <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
                       <i className="fas fa-list-check text-red-300 text-sm" />
                     </div>
@@ -821,10 +863,15 @@ export default function HomePage() {
                   </div>
 
                   <ul className="grid sm:grid-cols-1 gap-2 text-gray-300 text-sm flex-grow">
-                    {["2–5 students (same school)", "Laptop(s) for the team", "Basic coding knowledge"].map((item) => (
+                    {[
+                      "2–5 students (same school)",
+                      "Laptop(s) for the team",
+                      "Basic coding knowledge",
+                      "Attendance at the Introduction Session",
+                    ].map((item) => (
                       <li
                         key={item}
-                        className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5"
+                        className="flex items-start gap-2 rounded-xl bg-black/20 border border-white/10 px-3 py-2"
                       >
                         <i className="fas fa-check text-red-300 mt-0.5 text-xs flex-shrink-0" />
                         <span className="text-xs md:text-sm leading-tight">{item}</span>
@@ -832,32 +879,34 @@ export default function HomePage() {
                     ))}
                   </ul>
 
-                  <div className="mt-3 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
+                  <div className="mt-2 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
                     <i className="fas fa-plug mr-1 text-red-300/70" /> Tip: Bring charger
                   </div>
                 </div>
 
-                {/* Column 3: How it works */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-5 flex flex-col h-full">
-                  <div className="flex items-start gap-3 mb-3">
+                {/* Column 3 */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                  <div className="flex items-start gap-3 mb-2">
                     <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
                       <i className="fas fa-info-circle text-purple-300" />
                     </div>
                     <div>
                       <h4 className="text-base md:text-lg font-bold text-purple-300 orbitron mb-1">How it works</h4>
-                      <p className="text-gray-300 text-xs md:text-sm">Register, choose a track, and submit your proposal.</p>
+                      <p className="text-gray-300 text-xs md:text-sm">
+                        Register, attend the introduction session, and submit your proposal package.
+                      </p>
                     </div>
                   </div>
 
                   <div className="grid gap-2 text-sm flex-grow">
                     {[
-                      { n: "1", t: "Register your team" },
-                      { n: "2", t: "Pick a track" },
-                      { n: "3", t: "Submit proposal" },
+                      { n: "1", t: "Register your team by March 24" },
+                      { n: "2", t: "Attend the online introduction session on March 25" },
+                      { n: "3", t: "Submit PPT + 15 min recording by April 7" },
                     ].map((s) => (
                       <div
                         key={s.n}
-                        className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2.5"
+                        className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 px-3 py-2"
                       >
                         <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-red-500/60 to-purple-500/60 flex items-center justify-center text-xs font-bold orbitron flex-shrink-0">
                           {s.n}
@@ -869,19 +918,16 @@ export default function HomePage() {
 
                   <Link
                     href="/register"
-                    className="mt-4 block text-center btn-inferno px-6 py-3 rounded-full font-bold text-sm md:text-base hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-[1.02]"
+                    className="mt-3 block text-center btn-inferno px-6 py-3 rounded-full font-bold text-sm md:text-base hover:shadow-2xl hover:shadow-red-500/40 transition-all duration-300 transform hover:scale-[1.02]"
                   >
                     <i className="fas fa-rocket mr-2" />
                     Register Now
                   </Link>
 
-                  <div className="mt-3 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2.5 text-xs text-gray-300">
-                    <i className="fas fa-certificate text-red-300 mr-1" />
-                    <span className="text-gray-100 font-semibold">Finalists</span> get a{" "}
-                    <span className="text-red-300 font-semibold">Finalist Certificate</span>{" "}
-                    <span className="text-gray-400">•</span>{" "}
-                    <span className="text-gray-100 font-semibold">Winners</span> get a{" "}
-                    <span className="text-red-300 font-semibold">Winner Certificate</span>
+                  <div className="mt-2 rounded-xl bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-white/10 px-3 py-2 text-xs text-gray-300">
+                    <i className="fas fa-circle-info text-red-300 mr-1" />
+                    Submission links, guidelines, additional instructions, and sample materials will be shared during the{" "}
+                    <span className="text-white font-semibold">Introduction Session</span>.
                   </div>
                 </div>
               </div>
