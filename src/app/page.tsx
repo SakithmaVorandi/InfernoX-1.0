@@ -880,6 +880,13 @@ export default function HomePage() {
 
             <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-400">
               <span className="flex items-center gap-2">
+                <i className="fas fa-users text-red-400/70" />
+                <span>
+                  <span className="text-red-200 font-semibold text-base">23</span> Finalist Teams
+                </span>
+              </span>
+              <span className="text-gray-600">•</span>
+              <span className="flex items-center gap-2">
                 <i className="fas fa-building-columns text-orange-300/70" />
                 <span>
                   <span className="text-orange-200 font-semibold text-base">15</span> Schools Qualified
