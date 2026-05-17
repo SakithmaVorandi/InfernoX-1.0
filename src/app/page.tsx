@@ -101,52 +101,61 @@ export default function HomePage() {
         color: "from-red-500 to-orange-600",
         title: "Official Launch of InfernoX 1.0",
         time: "Feb 8",
-        text: "InfernoX 1.0 officially launches.",
+        text: "InfernoX 1.0 was officially launched by the Robotics Club of LNBTI.",
         border: "border-red-500/30",
         titleColor: "text-red-400",
       },
       {
         icon: "2",
         color: "from-purple-500 to-pink-600",
-        title: "Registrations",
-        time: "Extended till Mar 24",
-        text: "Registrations have been extended till March 24th. Teams must register and confirm participation before the final deadline.",
+        title: "Registrations Closed",
+        time: "Mar 24",
+        text: "Team registrations have officially closed after receiving applications from schools across Sri Lanka.",
         border: "border-purple-500/30",
         titleColor: "text-purple-400",
       },
       {
         icon: "3",
         color: "from-blue-500 to-cyan-600",
-        title: "Introduction Session (Online)",
+        title: "Introduction Session Completed",
         time: "Mar 25",
-        text: "All registered students must participate in the first Introduction Session.",
+        text: "The official online introduction session was successfully conducted for all registered participants.",
         border: "border-blue-500/30",
         titleColor: "text-blue-400",
       },
       {
         icon: "4",
         color: "from-green-500 to-teal-600",
-        title: "Proposal Submission Deadline",
+        title: "Proposal Submission Completed",
         time: "Apr 7",
-        text: "Teams must submit their proposal presentation together with a 15-minute proposal explanation recording before the deadline.",
+        text: "Teams submitted their proposal presentations together with project explanation video recordings for evaluation.",
         border: "border-green-500/30",
         titleColor: "text-green-400",
       },
       {
         icon: "5",
         color: "from-orange-500 to-red-600",
-        title: "Announcement of First Round Winners",
-        time: "Apr 10",
-        text: "The first round winners will be officially announced after the proposal evaluation process is completed.",
+        title: "First Round Evaluation Completed",
+        time: "Completed",
+        text: "The judging panel completed evaluation of all submitted proposals and presentation videos.",
         border: "border-orange-500/30",
         titleColor: "text-orange-400",
       },
       {
+        icon: "6",
+        color: "from-pink-500 to-purple-600",
+        title: "Finalists Officially Selected",
+        time: "Final Round",
+        text: "Selected finalist teams from each category have officially qualified for the final round of InfernoX 1.0.",
+        border: "border-pink-500/30",
+        titleColor: "text-pink-400",
+      },
+      {
         icon: "II",
         color: "from-yellow-500 to-orange-600",
-        title: "Final Event / Project Demonstration",
-        time: "Expected: May 30 – Jun 5",
-        text: "Finalists will demonstrate their working solutions and compete for awards during the final event.",
+        title: "Grand Finale & Project Demonstration",
+        time: "Coming Soon",
+        text: "Finalist teams will showcase their final working solutions and compete for championship awards at the final event.",
         border: "border-yellow-500/30",
         titleColor: "text-yellow-400",
       },
@@ -191,10 +200,8 @@ export default function HomePage() {
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-
     const offset = 96;
     const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
-
     window.scrollTo({ top, behavior: "smooth" });
     setMobileOpen(false);
   };
@@ -245,7 +252,6 @@ export default function HomePage() {
     if (flamesContainer) {
       flamesContainer.innerHTML = "";
       const numParticles = 20;
-
       for (let i = 0; i < numParticles; i++) {
         const p = document.createElement("div");
         p.className = "flame-particle";
@@ -376,9 +382,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mb-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/10 px-5 py-2 text-sm text-orange-200">
-            <i className="fas fa-bullhorn text-orange-300" />
-            Registrations extended till March 24th
+          {/* Status Banner */}
+          <div className="mb-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-green-400/30 bg-green-500/10 px-5 py-2 text-sm text-green-200">
+            <i className="fas fa-circle-check text-green-300" />
+            First Round Officially Completed • Finalists Selected
           </div>
 
           <h1 className="text-7xl md:text-9xl font-black mb-8 orbitron">
@@ -392,21 +399,22 @@ export default function HomePage() {
             <span className="text-orange-400">Competition</span>
           </p>
 
-          <p className="text-xl md:text-2xl mb-12 text-gray-300">
-            Spark. Build. Burn with <span className="text-red-400 font-bold">Brilliance</span>
+          <p className="text-xl md:text-2xl mb-8 text-gray-300">
+            Spark. Build. Burn with{" "}
+            <span className="text-red-400 font-bold">Brilliance</span>
           </p>
 
-          <div className="flex flex-wrap justify-center gap-6 mb-12 text-lg">
-            <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-red-500/30 glow-box floating">
-              <i className="fas fa-calendar-alt text-red-400" />
-              <span>Registration Deadline: March 24</span>
+          <div className="flex flex-wrap justify-center gap-4 mb-12 text-lg">
+            <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-green-500/30 glow-box floating">
+              <i className="fas fa-circle-check text-green-400" />
+              <span>First Round Completed</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-purple-500/30 glow-box floating"
               style={{ animationDelay: "0.5s" }}
             >
-              <i className="fas fa-video text-purple-400" />
-              <span>Introduction Session: March 25</span>
+              <i className="fas fa-users text-purple-400" />
+              <span>Finalists Selected</span>
             </div>
             <div
               className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/30 glow-box floating"
@@ -417,17 +425,16 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => scrollToId("register")}
+              onClick={() => scrollToId("finalists")}
               className="btn-inferno px-10 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-105 relative overflow-hidden group"
             >
               <span className="relative z-10">
-                <i className="fas fa-rocket mr-2" />
-                Register Your Team
+                <i className="fas fa-trophy mr-2" />
+                View Finalists
               </span>
             </button>
-
             <button
               onClick={() => scrollToId("timeline")}
               className="border-2 border-red-400 px-10 py-4 rounded-full font-bold text-lg hover:bg-red-400/10 transition-all duration-300 relative overflow-hidden group btn-inferno"
@@ -462,12 +469,11 @@ export default function HomePage() {
 
               <div className="grid gap-4 mt-8">
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-red-500/20 glow-box">
-                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we’re solving</h3>
+                  <h3 className="text-xl font-bold orbitron text-red-400 mb-2">Problem we're solving</h3>
                   <p className="text-gray-300">
-                    Students often build projects without a real problem focus, so ideas don’t translate into impact.
+                    Students often build projects without a real problem focus, so ideas don't translate into impact.
                   </p>
                 </div>
-
                 <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/20 glow-box">
                   <h3 className="text-xl font-bold orbitron text-purple-400 mb-2">Our solution</h3>
                   <p className="text-gray-300">
@@ -495,7 +501,6 @@ export default function HomePage() {
 
             <div className="relative group scroll-reveal">
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/30 to-purple-500/30 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-300" />
-
               <div className="relative rounded-3xl overflow-hidden border-2 border-red-500/30 neon-border card-3d">
                 <div className="relative w-full h-96">
                   <Image
@@ -507,7 +512,6 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                 </div>
-
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="text-2xl font-bold text-red-400 mb-3 orbitron">Build with Purpose</h3>
                   <div className="flex flex-wrap items-center gap-2 text-sm">
@@ -523,7 +527,6 @@ export default function HomePage() {
                       Proposal
                     </span>
                   </div>
-
                   <p className="text-gray-200/80 text-sm mt-3">Collaborate, iterate, and pitch something meaningful.</p>
                 </div>
               </div>
@@ -535,48 +538,108 @@ export default function HomePage() {
       {/* Tracks */}
       <section id="tracks" className="py-24 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14 scroll-reveal">
-            <span className="text-purple-400 font-semibold text-sm uppercase tracking-widest orbitron">
-              Choose Your Battlefield
+          <div className="text-center mb-16 scroll-reveal">
+            <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">
+              Competition Categories
             </span>
-            <h2 className="text-5xl font-bold mt-4 mb-4 orbitron">
-              Competitive <span className="text-gradient-animated">Tracks</span>
+            <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
+              Competition <span className="text-gradient-animated">Tracks</span>
             </h2>
-            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
-              Pick one track and build an AI solution with real-world value.
-            </p>
+            <p className="text-gray-300 text-xl">Choose your arena and build something that matters</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6">
             {tracks.map((t) => (
               <div
                 key={t.title}
-                className={`scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${t.border} glow-box card-3d
-                  w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[420px]`}
+                className={`group relative scroll-reveal bg-gray-800/45 backdrop-blur-sm p-7 rounded-2xl border ${t.border} glow-box card-3d
+                w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[420px] overflow-hidden transition-all duration-500`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/25 to-purple-500/25 border border-red-500/20 flex items-center justify-center">
-                    <i className={`fas ${t.icon} text-red-300`} />
-                  </div>
-                  <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-purple-500/20 text-gray-200">
-                    {t.badge}
-                  </span>
-                </div>
+                {/* Glow Hover Background */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-br from-red-500/10 via-purple-500/10 to-orange-500/10 pointer-events-none" />
 
-                <h3 className="text-xl font-bold mt-4 orbitron text-red-200">{t.title}</h3>
-                <p className="text-gray-300 mt-3 leading-relaxed">{t.desc}</p>
+                <div className="relative z-10">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/25 to-purple-500/25 border border-red-500/20 flex items-center justify-center">
+                      <i className={`fas ${t.icon} text-red-300`} />
+                    </div>
+                    <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-purple-500/20 text-gray-200">
+                      {t.badge}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold mt-4 orbitron text-red-200">{t.title}</h3>
+                  <p className="text-gray-300 mt-3 leading-relaxed">{t.desc}</p>
+
+                  {/* Hover Teams Section */}
+                  <div className="mt-5 max-h-0 overflow-hidden opacity-0 group-hover:max-h-[500px] group-hover:opacity-100 transition-all duration-500">
+                    <div className="border-t border-white/10 pt-4">
+                      <h4 className="text-sm font-bold uppercase tracking-wider text-purple-300 mb-3 orbitron">
+                        Finalist Teams
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {t.title === "Education & Skill Development" &&
+                          ["QuantaCanvas", "Team Revolution", "Alpha Vazians", "The48Devs", "Vertex"].map((team) => (
+                            <span
+                              key={team}
+                              className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-xs text-gray-200"
+                            >
+                              {team}
+                            </span>
+                          ))}
+
+                        {t.title === "Disaster Management & Resilience" &&
+                          ["Quarista", "Team Apex", "Hilurians", "SV sisters"].map((team) => (
+                            <span
+                              key={team}
+                              className="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-xs text-gray-200"
+                            >
+                              {team}
+                            </span>
+                          ))}
+
+                        {t.title === "AI for Post-harvest Management" &&
+                          ["Team Vishhaka", "Team PCM", "KNS Team 01", "GreenLogic AI"].map((team) => (
+                            <span
+                              key={team}
+                              className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-xs text-gray-200"
+                            >
+                              {team}
+                            </span>
+                          ))}
+
+                        {t.title === "Open Innovation" &&
+                          [
+                            "Team A",
+                            "Debug dreamers",
+                            "MRC brothers",
+                            "LogicLane",
+                            "THE LOGIC CREW",
+                            "Exchron",
+                            "Young inventors",
+                            "KNS Team 04",
+                            "KNS Team 05",
+                            "KNS team 03",
+                          ].map((team) => (
+                            <span
+                              key={team}
+                              className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-xs text-gray-200"
+                            >
+                              {team}
+                            </span>
+                          ))}
+
+                        {t.title === "Renewable Energy & Energy Efficiency" && (
+                          <span className="px-3 py-1 rounded-full bg-gray-500/10 border border-gray-500/20 text-xs text-gray-300">
+                            No finalists selected
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
-          </div>
-
-          <div className="mt-10 text-center scroll-reveal">
-            <button
-              onClick={() => scrollToId("register")}
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/15 transition"
-            >
-              <i className="fas fa-arrow-down text-purple-300" />
-              <span className="font-semibold">Register for a Track</span>
-            </button>
           </div>
         </div>
       </section>
@@ -607,7 +670,6 @@ export default function HomePage() {
                   >
                     {t.icon}
                   </div>
-
                   <div className={`flex-1 bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border ${t.border} glow-box`}>
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
                       <h3 className={`text-2xl font-bold orbitron ${t.titleColor}`}>{t.title}</h3>
@@ -629,33 +691,31 @@ export default function HomePage() {
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400/20 to-red-500/20 border border-orange-300/20 flex items-center justify-center flex-shrink-0">
                   <i className="fas fa-circle-info text-orange-300 text-lg" />
                 </div>
-
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-3">
                     <span className="inline-flex items-center rounded-full border border-orange-300/20 bg-orange-400/10 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-orange-200 orbitron">
-                      Must Read
+                      Official Update
                     </span>
                     <h3 className="text-2xl font-bold orbitron text-orange-300 leading-tight">
-                      Important Notice
+                      First Round Successfully Completed
                     </h3>
                   </div>
-
                   <div className="space-y-3">
                     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
                       <p className="text-gray-100 leading-relaxed">
-                        All registered students must participate in the first{" "}
-                        <span className="text-white font-semibold">Introduction Session</span>.
+                        The first round proposal evaluation and presentation review process has been officially completed.
                       </p>
                     </div>
-
                     <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
                       <p className="text-gray-300 leading-relaxed">
-                        Further information, including{" "}
-                        <span className="text-orange-200 font-medium">submission links</span>,{" "}
-                        <span className="text-orange-200 font-medium">guidelines</span>,{" "}
-                        <span className="text-orange-200 font-medium">additional instructions</span>, and{" "}
-                        <span className="text-orange-200 font-medium">sample materials</span> will be provided during the
-                        Introduction Session.
+                        Finalist teams from each competition category have now been selected for the{" "}
+                        <span className="text-orange-200 font-semibold">Grand Final Round</span>.
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+                      <p className="text-gray-300 leading-relaxed">
+                        Additional information regarding the final event, judging process, schedules, and demonstration
+                        guidelines will be announced soon.
                       </p>
                     </div>
                   </div>
@@ -682,7 +742,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mb-2 scroll-reveal">
+          <div className="mb-6 scroll-reveal">
             <div className="mx-auto max-w-4xl rounded-2xl border border-white/10 bg-gradient-to-r from-red-500/10 via-purple-500/10 to-orange-500/10 px-5 py-3 backdrop-blur-sm">
               <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-gray-200/90">
                 <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 border border-white/10">
@@ -714,7 +774,6 @@ export default function HomePage() {
                 <div
                   className={`pointer-events-none absolute -top-20 -right-16 h-48 w-48 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${p.color}`}
                 />
-
                 <div className="flex items-start justify-between gap-5">
                   <div className="min-w-0">
                     <div
@@ -722,11 +781,9 @@ export default function HomePage() {
                     >
                       <i className={`fas ${p.icon}`} />
                     </div>
-
                     <h3 className="text-xl font-bold mt-5 orbitron text-purple-100">{p.title}</h3>
                     <p className="text-gray-300 mt-1 text-sm">{p.subtitle}</p>
                   </div>
-
                   <div className="text-right flex-shrink-0">
                     <div className="text-[11px] text-gray-400 uppercase tracking-widest">Cash Prize</div>
                     <div className="mt-2 leading-none">
@@ -735,7 +792,6 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-
                 {p.perks?.length ? (
                   <div className="mt-5 grid gap-2">
                     {p.perks.map((perk) => (
@@ -749,7 +805,6 @@ export default function HomePage() {
                     ))}
                   </div>
                 ) : null}
-
                 <div className="mt-5 flex flex-wrap items-center gap-2">
                   <span className="text-xs px-3 py-1 rounded-full bg-gray-900/50 border border-red-500/20 text-gray-200">
                     Winner Certificate
@@ -774,8 +829,92 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Register */}
-      <section id="register" className="py-12 px-4 hero-gradient relative flame-bg">
+      {/* Finalist Schools */}
+      <section id="finalists" className="py-20 px-4 hero-gradient relative flame-bg overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 scroll-reveal">
+            <span className="text-orange-400 font-semibold text-sm uppercase tracking-widest orbitron">
+              Final Round Qualifiers
+            </span>
+            <h2 className="text-5xl font-bold mt-4 mb-5 orbitron">
+              Finalist <span className="text-gradient-animated">Schools</span>
+            </h2>
+            <p className="text-gray-300 text-lg max-w-3xl mx-auto">
+              The following schools have officially qualified for the{" "}
+              <span className="text-orange-300 font-semibold">Final Round</span> of InfernoX 1.0 after successfully
+              completing the first round proposal and presentation evaluations.
+            </p>
+          </div>
+
+          {/* Compact school list — pill/badge style */}
+          <div className="scroll-reveal bg-gray-800/40 backdrop-blur-sm rounded-3xl border border-orange-500/20 p-6 md:p-8">
+            <div className="flex flex-wrap gap-3 justify-center">
+              {[
+                "Nalanda College, Colombo 10",
+                "Ananda College, Colombo 10",
+                "Royal College, Colombo",
+                "Visakha Vidyalaya, Colombo",
+                "R/Kolonna National School",
+                "Sujatha Vidyalaya, Nugegoda",
+                "Wesley College",
+                "Mahinda Rajapaksha College, Homagama",
+                "Trinity College, Kandy",
+                "Dharmapala Vidyalaya, Pannipitiya",
+                "Bandaranayake Central College, Veyangoda",
+                "St. Joseph Vaz College, Wennappuwa",
+                "Ave Maria Convent, Negombo",
+                "St. Rita's College",
+                "BT/BC/Hiluriya Vidyalayam",
+              ].map((school, idx) => (
+                <div
+                  key={school}
+                  className="group flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-900/50 border border-orange-500/20 hover:border-orange-400/40 hover:bg-orange-500/10 transition-all duration-300 cursor-default"
+                  style={{ animationDelay: `${idx * 0.04}s` }}
+                >
+                  <i className="fas fa-school text-orange-400 text-xs flex-shrink-0" />
+                  <span className="text-gray-100 text-sm font-medium leading-tight">{school}</span>
+                  <i className="fas fa-medal text-orange-300/60 text-xs flex-shrink-0 group-hover:text-orange-300 transition-colors" />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-400">
+              <span className="flex items-center gap-2">
+                <i className="fas fa-building-columns text-orange-300/70" />
+                <span>
+                  <span className="text-orange-200 font-semibold text-base">15</span> Schools Qualified
+                </span>
+              </span>
+              <span className="text-gray-600">•</span>
+              <span className="flex items-center gap-2">
+                <i className="fas fa-trophy text-yellow-400/70" />
+                <span>
+                  <span className="text-yellow-200 font-semibold text-base">5</span> Competition Tracks
+                </span>
+              </span>
+              <span className="text-gray-600">•</span>
+              <span className="flex items-center gap-2">
+                <i className="fas fa-flag-checkered text-purple-400/70" />
+                Grand Finale Ahead
+              </span>
+            </div>
+          </div>
+
+          {/* Bottom Highlight */}
+          <div className="mt-8 text-center scroll-reveal">
+            <div className="inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-orange-400/20 bg-orange-500/10 px-6 py-4 backdrop-blur-sm">
+              <i className="fas fa-trophy text-yellow-300 text-xl" />
+              <p className="text-gray-200 text-sm md:text-base">
+                Congratulations to all finalist schools selected for the{" "}
+                <span className="text-orange-300 font-semibold">InfernoX 1.0 Grand Finale</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Register (commented out — preserved) */}
+      {/*<section id="register" className="py-12 px-4 hero-gradient relative flame-bg">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6 scroll-reveal">
             <span className="text-red-400 font-semibold text-sm uppercase tracking-widest orbitron">Join the Battle</span>
@@ -799,9 +938,9 @@ export default function HomePage() {
             <div className="relative rounded-3xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-gray-900/30 to-purple-500/10 p-5 md:p-6 overflow-hidden">
               <div className="pointer-events-none absolute -top-24 left-[-25%] h-48 w-[55%] rotate-12 bg-white/10 blur-2xl opacity-30" />
 
-              <div className="grid lg:grid-cols-3 gap-4 items-stretch">
+              <div className="grid lg:grid-cols-3 gap-4 items-stretch">*/}
                 {/* Column 1 */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                {/*<div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
                   <div className="flex items-start gap-3">
                     <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-purple-600 rounded-2xl flex items-center justify-center text-xl pulse-glow shadow-lg shadow-red-500/15 flex-shrink-0">
                       <i className="fas fa-fire" />
@@ -851,10 +990,10 @@ export default function HomePage() {
                   <div className="mt-auto pt-2 text-xs text-gray-400 italic border-t border-white/10">
                     <i className="fas fa-lightbulb text-yellow-300/70 mr-1" /> No registration fee
                   </div>
-                </div>
+                </div>*/}
 
                 {/* Column 2 */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                {/*<div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-9 h-9 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center flex-shrink-0">
                       <i className="fas fa-list-check text-red-300 text-sm" />
@@ -882,10 +1021,10 @@ export default function HomePage() {
                   <div className="mt-2 text-[11px] text-gray-400 bg-black/30 rounded-lg px-3 py-2 border border-white/5">
                     <i className="fas fa-plug mr-1 text-red-300/70" /> Tip: Bring charger
                   </div>
-                </div>
+                </div>*/}
 
                 {/* Column 3 */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
+                {/*<div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 flex flex-col h-full">
                   <div className="flex items-start gap-3 mb-2">
                     <div className="w-9 h-9 rounded-xl bg-purple-500/15 border border-purple-500/25 flex items-center justify-center flex-shrink-0">
                       <i className="fas fa-info-circle text-purple-300" />
@@ -934,7 +1073,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Footer */}
       <footer className="bg-slate-950/70 backdrop-blur-xl border-t border-white/10 shadow-2xl shadow-black/30">
@@ -946,12 +1085,10 @@ export default function HomePage() {
                   <Image src="/infernox-logo.png" alt="InfernoX" fill className="object-contain" />
                 </div>
               </div>
-
               <p className="text-gray-300/85 text-sm mt-2 max-w-md">
                 Sri Lanka&apos;s premier inter-school hackathon — empowering students to build impactful solutions through
                 structured problem-solving.
               </p>
-
               <div className="mt-3 inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-200/90">
                 Organized by Robotics Club of LNBTI
               </div>
@@ -990,7 +1127,6 @@ export default function HomePage() {
 
           <div className="mt-5 pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
             <p className="text-xs text-gray-400">© {new Date().getFullYear()} InfernoX 1.0. All rights reserved.</p>
-
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-400">Version 1.0.0</span>
               <span className="text-gray-600">|</span>
