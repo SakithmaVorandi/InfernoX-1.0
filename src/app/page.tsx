@@ -107,7 +107,7 @@ function FinalCountdown() {
           </div>
           <p className="text-gray-300 text-sm mb-6">
             <i className="fas fa-map-marker-alt text-orange-400 mr-1" />
-            LNBTI City Campus &nbsp;•&nbsp; July 3rd, 2025 &nbsp;•&nbsp; From 9:00 AM
+            Ariyana Reach Hotel, Maharagama &nbsp;•&nbsp; July 3rd, 2025 &nbsp;•&nbsp; From 9:00 AM
           </p>
           <div className="grid grid-cols-4 gap-3">
             {["Days", "Hours", "Mins", "Secs"].map((label) => (
@@ -143,7 +143,7 @@ function FinalCountdown() {
         </div>
         <p className="text-gray-300 text-sm mb-6">
           <i className="fas fa-map-marker-alt text-orange-400 mr-1" />
-          LNBTI City Campus &nbsp;•&nbsp; July 3rd, 2025 &nbsp;•&nbsp; From 9:00 AM
+          Ariyana Reach Hotel, Maharagama &nbsp;•&nbsp; July 3rd, 2025 &nbsp;•&nbsp; From 9:00 AM
         </p>
         <div className="grid grid-cols-4 gap-3">
           {[
@@ -301,7 +301,7 @@ export default function HomePage() {
         color: "from-yellow-400 to-orange-500",
         title: "Phase 3 — Grand Finale & Project Demonstration",
         time: "July 3, 2025 • 9:00 AM",
-        text: "The Grand Finale awaits! Finalist teams will showcase their final working solutions and compete for championship awards at LNBTI City Campus, from 9:00 AM onwards. Get ready to ignite the stage!",
+        text: "The Grand Finale awaits! Finalist teams will showcase their final working solutions and compete for championship awards at Ariyana Reach Hotel - Maharagama, from 9:00 AM onwards. Get ready to ignite the stage!",
         border: "border-yellow-400/40",
         titleColor: "text-yellow-300",
         completed: false,
@@ -572,7 +572,7 @@ export default function HomePage() {
               style={{ animationDelay: "1s" }}
             >
               <i className="fas fa-map-marker-alt text-orange-400" />
-              <span>LNBTI City Campus</span>
+              <span>Ariyana Reach Hotel, Maharagama</span>
             </div>
           </div>
 
@@ -856,7 +856,7 @@ export default function HomePage() {
                       <div className="mt-4 flex flex-wrap gap-2 text-xs text-gray-300">
                         <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-400/20">
                           <i className="fas fa-map-marker-alt text-orange-400" />
-                          LNBTI City Campus
+                          Ariyana Reach Hotel, Maharagama
                         </span>
                         <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-400/20">
                           <i className="fas fa-clock text-yellow-400" />
@@ -910,7 +910,7 @@ export default function HomePage() {
                         Now awaiting the{" "}
                         <span className="text-yellow-200 font-semibold">Phase 3 — Grand Final Round</span>{" "}
                         on <span className="text-white font-bold">3rd July 2025</span> at{" "}
-                        <span className="text-orange-300 font-semibold">LNBTI City Campus</span>, from{" "}
+                        <span className="text-orange-300 font-semibold">Ariyana Reach Hotel, Maharagama</span>, from{" "}
                         <span className="text-white font-semibold">9:00 AM</span> onwards.
                       </p>
                     </div>
@@ -1118,7 +1118,7 @@ export default function HomePage() {
                 Congratulations to all finalist schools! See you at the{" "}
                 <span className="text-yellow-300 font-semibold">InfernoX 1.0 Grand Finale</span>
                 {" "}on <span className="text-white font-bold">July 3rd</span> at{" "}
-                <span className="text-orange-300 font-semibold">LNBTI City Campus</span>
+                <span className="text-orange-300 font-semibold">Ariyana Reach Hotel, Maharagama</span>
               </p>
               <i className="fas fa-fire text-orange-400 text-xl" />
             </div>
