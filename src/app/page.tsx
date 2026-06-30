@@ -567,13 +567,17 @@ export default function HomePage() {
               <i className="fas fa-flag-checkered text-yellow-400" />
               <span>Final Round — July 3rd</span>
             </div>
-            <div
-              className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/30 glow-box floating"
+            <a
+              href="https://maps.app.goo.gl/tAXKnBCpEvnHJ4MFA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-sm px-6 py-3 rounded-full border border-orange-500/30 glow-box floating hover:bg-orange-500/10 hover:border-orange-400 transition-all duration-300 cursor-pointer group"
               style={{ animationDelay: "1s" }}
             >
-              <i className="fas fa-map-marker-alt text-orange-400" />
+              <i className="fas fa-map-marker-alt text-orange-400 group-hover:scale-110 transition-transform" />
               <span>Ariyana Reach Hotel, Maharagama</span>
-            </div>
+              <i className="fas fa-arrow-up-right-from-square text-xs text-orange-300 opacity-70 group-hover:opacity-100" />
+            </a>
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
@@ -805,9 +809,9 @@ export default function HomePage() {
             <h2 className="text-5xl font-bold mt-4 mb-6 orbitron">
               Important Dates & <span className="text-gradient-animated">Information</span>
             </h2>
-            <p className="text-gray-300 text-xl">
+            {/*<p className="text-gray-300 text-xl">
               Launch • Registration • Introduction Session • Proposal • Phase 1 ✓ • Phase 2 ✓ • Phase 3 Final
-            </p>
+            </p>*/}
           </div>
 
           <div className="relative">
